@@ -1,0 +1,119 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  Derived from openapi/knight-frank-api-v3-openapi.json, the harvested Azure AD
+  B2C OpenID Connect discovery documents, live response inspection on 2026-07-26,
+  and the RESO certification directory (https://www.reso.org/certificates/,
+  fetched 2026-07-26, searched case-insensitively for "knight" with zero matches).
+description: >-
+  Which cross-cutting and industry standards the Knight Frank API estate
+  actually conforms to. The honest answer is: OpenAPI 3.0.1 for one internal
+  service, OAuth 2.0 / OpenID Connect for one consumer login, and nothing else.
+  No real-estate data standard applies — RESO is a North American NAR/MLS
+  construct and the United Kingdom, Knight Frank's home market, has no MLS to
+  certify against.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      openapi/knight-frank-api-v3-openapi.json is a valid OpenAPI 3.0.1 document
+      served live at https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+      (HTTP 200) alongside a Swagger UI at /swagger/index.html (HTTP 200).
+  - id: oauth2
+    conforms: true
+    scope: api-v2 / consumer account only
+    evidence: >-
+      Azure AD B2C authorization-code flow; token and authorization endpoints
+      published in the harvested discovery documents.
+  - id: oidc
+    conforms: true
+    scope: api-v2 / consumer account only
+    evidence: >-
+      Two OpenID Connect discovery documents return HTTP 200 with
+      response_types_supported, id_token_signing_alg_values_supported (RS256),
+      pairwise subject types and standard claims.
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: false
+    evidence: /.well-known/oauth-authorization-server returns 404 on every host probed.
+  - id: rfc9728-oauth-protected-resource
+    conforms: false
+    evidence: /.well-known/oauth-protected-resource returns 404 on both api hosts.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on all four hosts probed.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No application/problem+json anywhere; failures return bare status codes,
+      empty bodies, or ASP.NET's {"Message": ...} default.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header observed; no deprecation policy published.
+  - id: rfc9110-http-semantics
+    conforms: partial
+    evidence: >-
+      Standard methods and status codes are used, but a bad parameter name
+      returns 204 rather than 400, and missing required parameters return 500
+      rather than a validation response.
+  - id: fapi
+    conforms: false
+    evidence: No FAPI profile, no mTLS, no PAR, no DPoP — not a financial-grade surface.
+  - id: scim2
+    conforms: false
+    evidence: No /Users or /Groups paths; the people directory is a search index, not SCIM.
+  - id: odata
+    conforms: false
+    evidence: >-
+      https://api-v3.web.prd-knightfrank.com/$metadata and
+      https://api-v2.web.prd-knightfrank.com/$metadata both return 404. A grep
+      match for "odata" on knightfrank.co.uk is a false positive — the substring
+      of "nodata" inside an EPiServer Forms localisation block.
+  - id: jsonapi
+    conforms: false
+    evidence: Responses are ad-hoc JSON; four different envelope shapes coexist across eleven operations.
+  - id: asyncapi
+    conforms: false
+    evidence: No event, streaming, webhook or WebSocket surface exists in the estate.
+  - id: graphql
+    conforms: false
+    evidence: /graphql returns 404 on both api hosts.
+  - id: reso-web-api
+    conforms: false
+    certified: false
+    evidence: >-
+      Zero matches for "knight", "knight frank" or "knightfrank" in the RESO
+      certification directory at https://www.reso.org/certificates/ (HTTP 200,
+      416,233 bytes, fetched 2026-07-26).
+    note: >-
+      Structural rather than a lapse. RESO certification is a North American
+      NAR/MLS construct; the UK has no MLS, and residential listings reach
+      consumers through the Rightmove/Zoopla portal duopoly by way of agency CRM
+      software rather than a cooperative standard.
+  - id: reso-data-dictionary
+    conforms: false
+    certified: false
+    evidence: Same directory search; no Data Dictionary certification and no DD version claimed.
+  - id: reso-upi
+    conforms: false
+    evidence: >-
+      No Universal Property Identifier anywhere. Knight Frank identifies offices
+      and people with internal integers and employee numbers (officeId 1976,
+      empNo values observed live) and property through opaque site slugs.
+  - id: iso-8601
+    conforms: partial
+    evidence: publishedOn fields in /search research and blog results carry date values; no timezone contract is documented.
+  - id: geojson
+    conforms: false
+    evidence: >-
+      Office records carry a geoLocation object with a coordinates array plus
+      separate longitude/latitude fields — GeoJSON-shaped coordinates but not a
+      GeoJSON Feature, and no CRS or spec reference.
+compliance_program:
+  published: false
+  certifications: []
+  evidence: >-
+    No trust centre, no SOC 2 / ISO 27001 / PCI / HIPAA claim, and no security
+    or compliance page was found by probe (see security/knight-frank-domain-security.yml
+    and the probe record in review.yml). The company publishes corporate legal
+    pages — terms and conditions and a privacy statement — but no security or
+    compliance posture for its technology estate.

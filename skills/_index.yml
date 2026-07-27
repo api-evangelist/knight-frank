@@ -1,0 +1,39 @@
+generated: '2026-07-26'
+method: generated
+source: >-
+  Packaged Agent Skills generated from openapi/knight-frank-api-v3-openapi.json
+  and verified against live anonymous calls to every operation on 2026-07-26.
+  Cross-cutting rules cite ../conventions/, ../errors/, ../authentication/ and
+  ../data-model/. The harvested contract declares no operationIds, so each skill
+  is grounded in the real method+path pairs and references the operationIds
+  assigned in ../overlays/knight-frank-api-v3-overlay.yaml.
+note: >-
+  Knight Frank publishes no AGENTS.md, no skills and no agent documentation —
+  both corporate domains return 404 for /llms.txt and /.well-known/ai-plugin.json,
+  and robots.txt blanket-disallows a list of AI crawlers. Every skill below
+  carries the same caveat: the api-v3 service is live and unauthenticated but is
+  internal plumbing offered under no terms, with no support channel and no
+  stability commitment.
+skills:
+  - file: knight-frank-find-office.md
+    name: Find a Knight Frank office
+    api: openapi/knight-frank-api-v3-openapi.json
+    operations: [searchOffices, getOfficeById]
+    paths: ['GET /office', 'GET /office/{id}']
+  - file: knight-frank-search-content-and-research.md
+    name: Search Knight Frank content and research
+    api: openapi/knight-frank-api-v3-openapi.json
+    operations: [searchAll, searchIntelligenceLab, getIntelligenceLabFacets, searchCmsPages, searchServiceLines]
+    paths: ['GET /search', 'GET /intelligencelab', 'GET /intelligencelab/facets', 'GET /cmspage', 'GET /service-lines']
+excluded_operations:
+  - operation: GET /person, GET /person/autocomplete, GET /person/cms-search
+    reason: >-
+      Deliberately NOT packaged as an agent skill. These operations return named
+      individuals' corporate email, direct-dial and mobile numbers to any caller
+      with no credential. Documenting that the exposure exists is legitimate
+      research and is recorded in ../review.yml; shipping an agent-ready recipe
+      with working pagination for it is not. The finding stays, the tooling does not.
+  - operation: POST /telemetry/increment-selected-count
+    reason: >-
+      Non-idempotent, unauthenticated analytics write with no consumer value.
+      Deliberately not packaged as an agent skill.

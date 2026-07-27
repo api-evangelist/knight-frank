@@ -1,0 +1,19 @@
+generated: '2026-07-26'
+method: generated
+source: >-
+  Native Arazzo 1.0.1 workflows authored over
+  openapi/knight-frank-api-v3-openapi.json and verified against live anonymous
+  calls on 2026-07-26. Steps bind with operationPath because the harvested
+  contract declares no operationIds.
+note: >-
+  Only one genuinely multi-step flow exists in this API. Nine of the eleven
+  operations are standalone searches with no chaining relationship, and the one
+  write (POST /telemetry/increment-selected-count) is a fire-and-forget analytics
+  counter with no consumer value. The property surface that would make richer
+  workflows possible lives on api-v2, which publishes no contract and returns 401.
+workflows:
+  - file: knight-frank-office-lookup.yml
+    workflowId: findKnightFrankOffice
+    title: Knight Frank office lookup
+    summary: Search the office directory by term and country, then fetch the full record for the best match.
+    operations: [GET /office, 'GET /office/{id}']

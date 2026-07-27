@@ -1,0 +1,203 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/knight-frank-api-v3-openapi.json (paths, parameters and the two
+  declared enum schemas) plus the field sets of real responses captured from
+  live anonymous calls to every operation on 2026-07-26. The contract itself
+  declares no response schemas at all — components.schemas contains only two
+  enums — so the entity shapes below are read from actual payloads and are
+  therefore observational, not contractual.
+docs: null
+notation: >-
+  relationships use has_one / has_many / belongs_to with the referencing field
+  name; direction is from the entity that owns the reference. Fields marked
+  observed_only do not appear anywhere in the OpenAPI document.
+contract_gap: >-
+  The OpenAPI document defines no response schema for any of the eleven
+  operations — every response is "200 Success" with no content block. Everything
+  a consumer needs to know about the data model is undiscoverable from the
+  contract and must be learned by calling the API.
+
+entities:
+  - name: Office
+    domain: directory
+    id_field: officeId
+    id_type: integer
+    description: A Knight Frank office, returned by the office directory search and by id.
+    observed_fields:
+      - officeId
+      - id
+      - name
+      - address1
+      - address2
+      - address3
+      - address4
+      - address5
+      - postcode
+      - country
+      - countryCode
+      - phoneNumber
+      - faxNumber
+      - emailAddress
+      - url
+      - officeOpeningTimes
+      - geoLocation (coordinates[], longitude, latitude)
+      - responseTap
+      - googleLocationId
+      - googleOpenInfo
+      - googleBusinessHours
+      - googleLatLng
+      - googleMetadata
+      - openNow
+      - openBetween
+      - otherLanguagesData
+      - '@search.score'
+      - selectedCount
+    sources:
+      - GET /office
+      - GET /office/{id}
+      - GET /search (offices[])
+  - name: Person
+    domain: directory
+    id_field: id
+    id_type: uuid
+    secondary_id: empNo
+    description: A Knight Frank staff member / partner in the people directory.
+    observed_fields:
+      - id
+      - firstName
+      - surname
+      - displayName
+      - title
+      - role
+      - empNo
+      - eaaLicense
+      - url
+      - email
+      - imageUrl
+      - directDial
+      - mobile
+      - biog
+      - countryCode
+      - department
+      - division
+      - office
+      - display
+      - displayOverride
+      - otherLanguagesData
+      - tags
+      - '@search.score'
+      - selectedCount
+    sources:
+      - GET /person
+      - GET /person/autocomplete
+      - GET /person/cms-search
+      - GET /search (people[])
+    privacy_note: >-
+      These records carry named individuals' direct-dial and mobile numbers and
+      corporate email addresses, served to anonymous callers with no credential,
+      no rate limit and no terms of use.
+  - name: ServiceLine
+    domain: taxonomy
+    description: >-
+      A Knight Frank service line (the business-segmentation taxonomy — valuation,
+      capital markets, occupier services and so on), looked up per site domain.
+    sources:
+      - GET /service-lines
+      - GET /search (serviceLines[])
+  - name: CmsPage
+    domain: content
+    description: A page in the Optimizely/EPiServer CMS behind knightfrank.com / knightfrank.co.uk.
+    sources:
+      - GET /cmspage
+      - GET /search (cms[])
+  - name: ResearchItem
+    domain: research
+    description: >-
+      A Knight Frank Intelligence Lab research publication. Carries title,
+      publishedOn, description and rootCategoryName in federated search hits.
+    observed_fields: [id, type, url, text, thumbnailUrl, research.title, research.publishedOn, research.description, research.rootCategoryName]
+    sources:
+      - GET /intelligencelab
+      - GET /intelligencelab/facets
+      - GET /search (research[])
+  - name: BlogPost
+    domain: content
+    description: An editorial post surfaced by federated search.
+    observed_fields: [id, type, url, text, post.rootCategoryClass, post.thumbnailUrl, post.publishedOn]
+    sources:
+      - GET /search (blog[])
+  - name: SearchHit
+    domain: search
+    description: >-
+      The federated wrapper each result is returned in — {id, type, url, text,
+      <typed payload>, diagnostics}. `type` discriminates people / offices /
+      research / blog / cms / serviceLines.
+    sources:
+      - GET /search
+  - name: Property
+    domain: listings
+    description: >-
+      Property listings are NOT served by this API. The consumer property search
+      and saved-property surface lives on api-v2, which returns 401 to every
+      anonymous request, publishes no contract, and is reachable only with an
+      Azure AD B2C consumer token. `propertiesAndSuggestions` on GET /search is
+      present in the response shape but returned empty on every anonymous call.
+    contract_published: false
+    sources:
+      - GET /search (propertiesAndSuggestions[], empty when anonymous)
+
+relationships:
+  - from: Person
+    to: Office
+    kind: belongs_to
+    via: office
+    confidence: medium
+    note: >-
+      Person.office is a display string ("Bristol Commercial Agents"), not the
+      integer Office.officeId — there is no join key in the payload, so the
+      relationship exists in the data but not as a usable foreign key.
+  - from: Person
+    to: ServiceLine
+    kind: belongs_to
+    via: department
+    confidence: low
+    note: department/division are strings, not taxonomy identifiers.
+  - from: SearchHit
+    to: Person
+    kind: has_one
+    via: person
+    confidence: high
+  - from: SearchHit
+    to: Office
+    kind: has_one
+    via: office
+    confidence: high
+  - from: SearchHit
+    to: ResearchItem
+    kind: has_one
+    via: research
+    confidence: high
+  - from: SearchHit
+    to: BlogPost
+    kind: has_one
+    via: post
+    confidence: high
+  - from: Office
+    to: OfficeOpeningTime
+    kind: has_many
+    via: officeOpeningTimes
+    confidence: high
+
+enums_declared_in_spec:
+  - name: IntelligenceLabOrderBy
+    source: openapi/knight-frank-api-v3-openapi.json#/components/schemas/IntelligenceLabOrderBy
+  - name: IntelligenceLabSearchFilterType
+    source: openapi/knight-frank-api-v3-openapi.json#/components/schemas/IntelligenceLabSearchFilterType
+
+identifiers:
+  officeId: sequential integer (e.g. 1976); also mirrored as a string `id`
+  person.id: GUID (e.g. 94eb4832-0df0-4320-a643-a2e0376d080d)
+  person.empNo: zero-padded employee number (redacted; a real value was observed but is not reproduced here)
+  person.url: slug of the form firstname-surname-empno
+  universal_property_identifier: none — no RESO UPI, no cross-market property key

@@ -1,0 +1,96 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/knight-frank-api-v3-openapi.json (which declares only "200 Success"
+  for all eleven operations and defines no error schema) plus the failure
+  responses actually observed on 2026-07-26 against both Knight Frank service
+  hosts. There is no docs error reference to search — Knight Frank publishes no
+  developer documentation.
+format: none
+rfc9457: false
+description: >-
+  Knight Frank's APIs have no error contract. The published OpenAPI document
+  declares no 4xx or 5xx response on any operation and defines no error schema,
+  so every failure below was established by probing. Failures come back as bare
+  status codes with empty bodies, an unstructured 500, or the framework default
+  from ASP.NET Web API — never as a typed, documented problem object. An agent
+  or integrator cannot distinguish "no results", "bad parameter" and "wrong
+  parameter name" from the response shape alone.
+problems:
+  - status: 200
+    title: Success (declared)
+    detail: >-
+      The only response declared in the contract, on all eleven operations, with
+      no response schema and no content type.
+    source_operation: openapi/knight-frank-api-v3-openapi.json (all paths)
+    declared: true
+  - status: 204
+    title: No content — silently ignored parameter
+    observed_on: GET https://api-v3.web.prd-knightfrank.com/search?searchTerm=london
+    body: empty
+    cause: >-
+      The operation expects `term`; an unrecognised parameter name is not
+      rejected as a validation error, it simply produces an empty 204.
+    remediation: Use the documented parameter name `term`.
+    declared: false
+  - status: 404
+    title: Not found
+    observed_on: GET https://api-v3.web.prd-knightfrank.com/nonexistent-path-probe
+    body: empty (zero bytes, no content-type)
+    cause: Unknown route on the api-v3 host.
+    declared: false
+  - status: 500
+    title: Server error on missing required parameters
+    observed_on: GET https://api-v3.web.prd-knightfrank.com/intelligencelab/facets
+    body: unstructured
+    cause: >-
+      Required query parameters omitted. The service raises an unhandled server
+      error instead of returning a 400 validation response — the contract marks
+      no parameter as required, so a caller has no way to know which are.
+    remediation: Supply term / languageCode / hostname; expect no validation feedback.
+    declared: false
+  - status: 401
+    title: Unauthorized (api-v2)
+    observed_on:
+      - GET https://api-v2.web.prd-knightfrank.com/properties/search
+      - GET https://api-v2.web.prd-knightfrank.com/secure/account
+    body: empty (zero bytes)
+    www_authenticate: not returned
+    cause: >-
+      The property/account service requires an Azure AD B2C bearer token. No
+      challenge header, no error body and no documentation of how a token is
+      obtained.
+    remediation: >-
+      Not remediable by a third party — no developer credential exists. See
+      authentication/knight-frank-authentication.yml.
+    declared: false
+  - status: 404
+    title: No HTTP resource was found that matches the request URI (api-v2)
+    observed_on: GET https://api-v2.web.prd-knightfrank.com/properties
+    body: '{"Message":"No HTTP resource was found that matches the request URI ..."}'
+    envelope_field: Message
+    cause: ASP.NET Web API default routing error — the framework default, not a designed error type.
+    declared: false
+  - status: 302
+    title: Redirect to a server error page
+    observed_on:
+      - GET https://api-v2.web.prd-knightfrank.com/
+      - GET https://api-v2.web.prd-knightfrank.com/swagger/v1/swagger.json
+    body: redirect to /error.htm?aspxerrorpath=/
+    cause: Classic ASP.NET custom-errors redirect leaking into an API surface.
+    declared: false
+  - status: 502
+    title: Bad Gateway from the edge WAF
+    observed_on: GET https://api.knightfrank.com/
+    body: '<html><head><title>502 Bad Gateway</title></head>... wswaf'
+    cause: >-
+      api.knightfrank.com is CNAMEd to a Gcore edge with a WAF in front of no
+      published origin. It is not a developer surface; repeated requests are
+      dropped at the connection level.
+    declared: false
+gaps:
+  - No error is declared in the OpenAPI document at all.
+  - No error code registry, no error type URIs, no machine-readable error taxonomy.
+  - No RFC 9457 application/problem+json.
+  - No 400 validation responses — bad input produces 204, 500 or silence.
+  - No 429 and no rate-limit contract.

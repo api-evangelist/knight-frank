@@ -1,0 +1,57 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  Direct searches of the public package registries on 2026-07-26, plus the
+  Knight Frank web estate. Knight Frank publishes no developer programme, no
+  SDK page and no GitHub organisation, so there is no first-party client
+  library to catalogue. This file records the search that established that,
+  rather than asserting an absence without evidence.
+description: >-
+  First-party Knight Frank client libraries. None exist. Every registry below
+  was queried for "knightfrank" and "knight frank" and returned either zero
+  results or only unrelated packages (font packages for the Frank Ruhl Libre
+  typeface, TypeScript type stubs, a "Knight" language grammar). There is also
+  no Knight Frank GitHub organisation to host one — github.com/knightfrank
+  returns 404 and github.com/knight-frank is an unrelated empty personal
+  account with zero public repositories (created 2018-07-01).
+packages: []
+registries_probed:
+  - registry: npm
+    query: knightfrank / knight frank
+    endpoint: https://registry.npmjs.org/-/v1/search
+    result: no first-party package; only unrelated matches
+  - registry: pypi
+    query: knightfrank / knight-frank
+    endpoint: https://pypi.org/pypi/{name}/json
+    result: HTTP 404 for both names
+  - registry: rubygems
+    query: knightfrank
+    endpoint: https://rubygems.org/api/v1/search.json
+    result: empty array
+  - registry: packagist
+    query: knightfrank
+    endpoint: https://packagist.org/search.json
+    result: 0 results
+  - registry: crates.io
+    query: knightfrank
+    endpoint: https://crates.io/api/v1/crates
+    result: 0 crates
+  - registry: nuget
+    query: knightfrank
+    endpoint: https://azuresearch-usnc.nuget.org/query
+    result: 0 total hits
+  - registry: maven-central
+    query: knightfrank
+    result: no first-party artifact found
+  - registry: pkg.go.dev
+    query: knightfrank
+    result: no first-party module found
+source_code:
+  github_org: https://github.com/knightfrank
+  github_org_status: 404
+  note: >-
+    No Knight Frank source is published anywhere. The only Knight Frank client
+    code that is publicly reachable is the minified Angular application bundle
+    served to browsers at
+    https://www.knightfrank.co.uk/properties-resources/js/app-72bd2f22.bundle.js
+    — a compiled site asset, not a distributable SDK.

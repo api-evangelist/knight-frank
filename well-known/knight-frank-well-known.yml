@@ -1,0 +1,81 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  Live probes of the /.well-known/ discovery surface on 2026-07-26 against
+  every host in apis.yml (Website, WebsiteUK, the api-v3 baseURL) and the two
+  undocumented service hosts observed in the site's front-end configuration
+  (api-v2 and the Azure AD B2C identity hosts).
+description: >-
+  Knight Frank publishes almost nothing at /.well-known/. There is no
+  security.txt, no api-catalog, no ai-plugin.json and no OAuth authorization
+  server metadata on any corporate or API host — every probe returns 404. The
+  only real /.well-known/ documents in the entire estate are the two Azure AD
+  B2C OpenID Connect discovery documents for the consumer "My Knight Frank"
+  account, which are served from the identity hosts under a policy-scoped path
+  and were harvested verbatim (they live in ../authentication/ because they
+  describe the auth surface rather than a catalog surface).
+hosts:
+  - host: https://www.knightfrank.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://www.knightfrank.co.uk
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+  - host: https://api-v3.web.prd-knightfrank.com
+    note: the anonymous corporate search API — its contract is at /swagger/v1/swagger.json, not /.well-known/
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api-v2.web.prd-knightfrank.com
+    note: the 401-protected property/account service; 404 bodies are ASP.NET Web API JSON, not a discovery document
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+  - host: https://login.prd-knightfrank.com
+    note: Azure AD B2C custom identity domain, tenant KnightFrankB2Cprod (ea15e386-0dbc-4a5b-ac74-08f50f444486)
+    documents:
+      - path: /ea15e386-0dbc-4a5b-ac74-08f50f444486/B2C_1A_MYKFSIGNIN/v2.0/.well-known/openid-configuration
+        status: 200
+        type: application/json
+        file: ../authentication/knight-frank-b2c-mykfsignin-openid-configuration.json
+      - path: /ea15e386-0dbc-4a5b-ac74-08f50f444486/v2.0/.well-known/openid-configuration
+        status: 404
+        note: B2C requires the policy segment in the discovery path
+  - host: https://KnightFrankB2Cprod.b2clogin.com
+    documents:
+      - path: /KnightFrankB2Cprod.onmicrosoft.com/B2C_1A_MYKFSIGNIN/v2.0/.well-known/openid-configuration
+        status: 200
+        type: application/json
+        file: ../authentication/knight-frank-b2clogin-mykfsignin-openid-configuration.json
+security_txt:
+  published: false
+  probed:
+    - https://www.knightfrank.com/.well-known/security.txt
+    - https://www.knightfrank.co.uk/.well-known/security.txt
+    - https://api-v3.web.prd-knightfrank.com/.well-known/security.txt
+    - https://api-v2.web.prd-knightfrank.com/.well-known/security.txt
+  note: >-
+    All 404. Knight Frank publishes no RFC 9116 security.txt and no
+    vulnerability-disclosure contact anywhere in its web estate.

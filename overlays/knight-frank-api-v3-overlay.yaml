@@ -1,0 +1,141 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for KnightFrank Api v3
+  version: 1.0.0
+extends: openapi/knight-frank-api-v3-openapi.json
+x-generated: '2026-07-26'
+x-method: generated
+x-source: >-
+  Generated from openapi/knight-frank-api-v3-openapi.json (harvested verbatim
+  from https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json) plus live
+  anonymous calls to every operation on 2026-07-26. The harvested document
+  declares no servers block, no operationIds, no summaries, no response content
+  or schemas, and no error responses. This overlay adds only what was directly
+  observed or is a factual restatement of the contract — it never invents
+  behaviour. The original document is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: knight-frank
+      x-apievangelist-note: >-
+        Unadvertised internal corporate search service. Reachable anonymously,
+        documented by its own Swagger UI, but not offered as a developer product —
+        no portal, no terms, no keys, no support channel.
+      x-apievangelist-conventions: conventions/knight-frank-conventions.yml
+      x-apievangelist-errors: errors/knight-frank-error-responses.yml
+      x-apievangelist-data-model: data-model/knight-frank-data-model.yml
+  - target: $
+    update:
+      servers:
+        - url: https://api-v3.web.prd-knightfrank.com
+          description: >-
+            Production host. Added by API Evangelist — the harvested document
+            omits a servers block entirely; this is the host the document is
+            served from and the host every operation was verified against.
+  - target: $
+    update:
+      tags:
+        - name: CMSPage
+          description: Search the Optimizely/EPiServer CMS pages behind knightfrank.com and knightfrank.co.uk.
+        - name: IntelligenceLab
+          description: Search the Knight Frank Intelligence Lab research index and its facets.
+        - name: Office
+          description: Global office directory — search by term and country, or fetch one office by id.
+        - name: Person
+          description: People/partner directory — search, autocomplete, and CMS-scoped people search.
+        - name: Search
+          description: Federated cross-site search fanning out over people, offices, research, blog, CMS and service lines.
+        - name: ServiceLine
+          description: Knight Frank service-line taxonomy lookup, scoped to a site domain.
+        - name: Telemetry
+          description: Client-side analytics write — increments a selection counter. Not idempotent.
+  - target: $.paths['/cmspage'].get
+    update:
+      operationId: searchCmsPages
+      summary: Search CMS pages
+      description: >-
+        Full-text search over CMS content for a given hostname and language.
+        Returns the {results, hasMore, totalCount, fromFuzzySearch} envelope.
+  - target: $.paths['/intelligencelab'].get
+    update:
+      operationId: searchIntelligenceLab
+      summary: Search the Intelligence Lab research index
+      description: >-
+        Search Knight Frank research publications with filter type, media type,
+        date range, source type and ordering. Returns the search envelope.
+  - target: $.paths['/intelligencelab/facets'].get
+    update:
+      operationId: getIntelligenceLabFacets
+      summary: Get Intelligence Lab search facets
+      description: >-
+        Returns facet buckets for the research index. Verified 2026-07-26:
+        omitting the query parameters produces HTTP 500 rather than a validation
+        error, so callers must supply term/languageCode/hostname.
+  - target: $.paths['/office'].get
+    update:
+      operationId: searchOffices
+      summary: Search the office directory
+      description: >-
+        Returns a bare JSON array (no envelope) of office records — id, name,
+        address lines, postcode, country, phone, email, url, opening times and a
+        geoLocation object. Page size is controlled by maxResultCount.
+  - target: $.paths['/office/{id}'].get
+    update:
+      operationId: getOfficeById
+      summary: Get one office by id
+      description: >-
+        Returns a single office object directly (no envelope). The id is the
+        integer officeId returned by searchOffices.
+  - target: $.paths['/person'].get
+    update:
+      operationId: searchPeople
+      summary: Search the people directory
+      description: >-
+        Returns a bare JSON array of staff records including name, title,
+        employee number, department, division, office, email, direct dial and
+        mobile. Page size is controlled by maxResultCount.
+  - target: $.paths['/person/autocomplete'].get
+    update:
+      operationId: autocompletePeople
+      summary: Autocomplete people names
+      description: Type-ahead variant of the people directory search. Returns a bare JSON array.
+  - target: $.paths['/person/cms-search'].get
+    update:
+      operationId: searchPeopleInCms
+      summary: Search people scoped to CMS content
+      description: >-
+        People search scoped to a CMS hostname. Returns the {results, hasMore,
+        totalCount, fromFuzzySearch} envelope rather than a bare array.
+  - target: $.paths['/search'].get
+    update:
+      operationId: searchAll
+      summary: Federated cross-site search
+      description: >-
+        One call fans out across every content type and returns a composite
+        object — propertiesAndSuggestions, people, offices, research, blog, cms
+        and serviceLines, each with its own <type>HasMore flag. The parameter is
+        `term`; passing `searchTerm` returns HTTP 204 with an empty body.
+  - target: $.paths['/service-lines'].get
+    update:
+      operationId: searchServiceLines
+      summary: Look up service lines
+      description: >-
+        Service-line taxonomy lookup. Note the site filter parameter here is
+        `domain`, not the `hostname` used elsewhere in this API.
+  - target: $.paths['/telemetry/increment-selected-count'].post
+    update:
+      operationId: incrementSelectedCount
+      summary: Increment a selection counter
+      description: >-
+        Fire-and-forget client analytics write. Unauthenticated and NOT
+        idempotent — replaying the call increments the counter again. There is no
+        Idempotency-Key mechanism anywhere in this API.
+      x-agentic-access: agentic-access/knight-frank-agentic-access.yml
+  - target: $.components
+    update:
+      x-apievangelist-note: >-
+        The harvested document defines no response schemas — components.schemas
+        holds only the two IntelligenceLab enums. Observed response entity shapes
+        are recorded in data-model/knight-frank-data-model.yml rather than being
+        injected here, because API Evangelist did not author this contract and
+        will not assert schemas the provider has not published.

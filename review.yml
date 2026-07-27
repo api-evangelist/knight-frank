@@ -1,0 +1,729 @@
+aid: knight-frank
+name: Knight Frank
+review:
+  question: What is Knight Frank's real, publicly reachable API surface, what does a
+    developer have to sign or join to use it, and what is its RESO posture?
+  date: '2026-07-26'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  tier: brokerage
+  primaryDomain: knightfrank.com
+  summary: |
+    Knight Frank publishes no developer programme of any kind — and simultaneously
+    runs one API that answers anonymously, with a live Swagger UI and a valid
+    OpenAPI 3.0.1 document, to anybody who finds the hostname. Those two facts are
+    recorded separately here and neither should be read as implying the other.
+
+    THE PUBLISHED POSTURE IS NOTHING. developer.knightfrank.com,
+    developers.knightfrank.com, docs.knightfrank.com and apis.knightfrank.com do not
+    resolve in DNS (no A record; curl exit 6, recorded as status 000). On
+    knightfrank.com the paths /developers, /api, /docs, /openapi.json, /swagger.json,
+    /api-docs, /.well-known/openid-configuration, /.well-known/security.txt,
+    /.well-known/ai-plugin.json and /llms.txt all return 404. The 125 KB sitemap at
+    https://www.knightfrank.com/sitemap.xml (HTTP 200, 610 <loc> entries) was grepped
+    case-insensitively for "developer", "swagger", "openapi" and "graphql" — zero
+    matches across the entire document. There is no developer portal, no API terms of
+    use, no key issuance process, no sandbox, no rate-limit page, no status page, no
+    changelog, no SDK and no Postman collection.
+
+    THE HOMONYM TRAP. https://www.knightfrank.co.uk/developers returns HTTP 200 — but
+    it 301s to
+    https://www.knightfrank.co.uk/commercial/solutions/developers-housebuilders, a
+    commercial advisory page for PROPERTY developers and housebuilders. This is a real
+    estate homonym, not a developer portal, and it must not be scored as one.
+
+    THE UNADVERTISED REACHABLE API. The consumer property search application at
+    https://www.knightfrank.co.uk/properties/residential/for-sale/london (HTTP 200)
+    carries an inline `kfsearchconfig` object naming its backing services:
+    ApiBase https://api-v2.web.prd-knightfrank.com, ApiSecureBase
+    https://api-v2.web.prd-knightfrank.com/secure, ApiBase3
+    https://api-v3.web.prd-knightfrank.com, CmsBase https://www.knightfrank.com,
+    ResourceHost https://content.knightfrank.com, plus an Azureb2c block. The two API
+    hosts behave in opposite ways:
+
+      - api-v3.web.prd-knightfrank.com is OPEN. /swagger/index.html returns HTTP 200
+        with a working Swagger UI. /swagger/v1/swagger.json returns HTTP 200,
+        application/json, 11,073 bytes, and parses as OpenAPI 3.0.1 titled
+        "KnightFrank Api v3" with 11 operations. /swagger/v1/swagger.yaml also returns
+        HTTP 200 (6,606 bytes) and parses. The endpoints themselves answer anonymously:
+        GET /office?term=london&isoCode=GB&languageCode=en&maxResultCount=2 returned
+        HTTP 200 with real office records (name, street address, postcode, country,
+        switchboard number, office email); GET
+        /person?term=smith&isoCode=GB&languageCode=en&maxResultCount=2 returned HTTP
+        200 with real staff records (name, title, employee number, work email, direct
+        dial, mobile, department, photo URL). No credential was presented and none was
+        demanded — no 401, no 403, no API key header, and the OpenAPI document contains
+        no securitySchemes block at all.
+
+      - api-v2.web.prd-knightfrank.com is CLOSED. GET /properties/search returned HTTP
+        401 and GET /secure/account returned HTTP 401. Its root 302s to
+        /error.htm?aspxerrorpath=/, and /swagger/v1/swagger.json 302s to the same error
+        page — no contract is served. The application bundle at
+        /properties-resources/js/app-72bd2f22.bundle.js (HTTP 200, 1,057,443 bytes)
+        shows this host being called through MSAL with a protected-resource map binding
+        ApiSecureBase to the Azure AD B2C scope, for the paths /account,
+        /properties/createsaved, /properties/savealerts and /properties/saved/.
+
+    WHAT THIS MEANS FOR A DEVELOPER. Nothing is offered. The v3 surface is an internal
+    corporate-search service that happens to be reachable and happens to ship its own
+    contract; it is not a product, has no published terms, and could be firewalled
+    without notice. The v2 surface — the one holding actual property listings and
+    consumer account data — is genuinely gated and requires an Azure AD B2C consumer
+    token minted for a first-party client. Neither route is a developer route.
+
+    One OpenAPI document was harvested (openapi/) and two OpenID Connect discovery
+    documents were harvested (authentication/). No OData $metadata, no AsyncAPI, no
+    GraphQL schema, no JSON Schema and no Postman collection exists anywhere.
+
+resoPosture:
+  certified: false
+  posture: No RESO reference found anywhere in Knight Frank's web estate; RESO is a
+    North American NAR/MLS construct and the United Kingdom has no MLS to certify
+    against.
+  webApiCertification: none found
+  dataDictionaryCertification: none found
+  dataDictionaryVersion: null
+  directoryEvidence: |
+    https://www.reso.org/certificates/ — the official RESO Certification Status list —
+    was fetched on 2026-07-26 (HTTP 200, 416,233 bytes) and searched
+    case-insensitively for "knight", "knight frank" and "knightfrank". Zero matches
+    anywhere in the document. The page was also searched for "United Kingdom" and
+    "England" — zero matches; every listed organization is United States based.
+    https://certification.reso.org/, the live certification analytics report, returned
+    HTTP 400 to an anonymous client and could not be queried programmatically.
+    https://www.reso.org/upi/ returned HTTP 404.
+  odataEndpoint: none
+  metadataDocument: |
+    Probed https://api-v3.web.prd-knightfrank.com/$metadata (HTTP 404, zero bytes) and
+    https://api-v2.web.prd-knightfrank.com/$metadata (HTTP 404, content-type
+    application/json). No OData service document and no $metadata exists anywhere in
+    the Knight Frank estate. The harvested contract is plain OpenAPI 3.0.1, not OData.
+    Nothing OData-shaped was found to save verbatim.
+  odataFalsePositive: |
+    A case-insensitive grep of https://www.knightfrank.co.uk/ matched the string
+    "odata". On inspection this is the substring of "nodata" inside an
+    EPiServer/Optimizely Forms localization block ("nodata":"There is no data"). It is
+    NOT an OData reference. Recorded explicitly so the false positive is not repeated.
+  universalPropertyIdentifier: |
+    No UPI. Knight Frank identifies people and offices with its own internal integer
+    and employee-number identifiers (officeId and empNo values observed in live
+    api-v3 responses) and identifies property through opaque slugs under
+    /properties/. Nothing in the estate maps to a RESO Universal Property Identifier,
+    and no UPI string appears in any fetched page or in the harvested OpenAPI document.
+  marketNote: |
+    This is the expected United Kingdom answer and is structural rather than a lapse.
+    The UK has no MLS and therefore no cooperative standard to certify against.
+    Residential listings are controlled by two portals — Rightmove and Zoopla — and
+    reach them through agency CRM software (Reapit, Alto, Street, Apex27) rather than a
+    shared cooperative pool. Knight Frank is a supplier into that pipe, not an operator
+    of it. "Certified but not reachable" does not apply here: there is no certification
+    layer in this market at all. Knight Frank does have a United States presence
+    (knightfrank.us 301s to https://www.knightfrank.com/usa, HTTP 200) but it is a
+    commercial and prime-residential advisory operation, not a residential MLS
+    participant, so RESO certification is not a mechanism that applies to it either.
+
+accessGate:
+  gate: none-published
+  gated: true
+  selfServe: false
+  portalConfirmed: false
+  whatYouMustSignOrJoin: |
+    Nothing is offered, so there is nothing to sign or join. There is no developer
+    signup, no application form, no partner or data-licence programme page, no API
+    terms of use, no sandbox and no key issuance process published anywhere on
+    knightfrank.com, knightfrank.co.uk or any of the ~40 country domains linked from
+    the global footer. The only published route into any Knight Frank data
+    conversation is the corporate contact form at
+    https://www.knightfrank.co.uk/contact-us (HTTP 200) or the office/people directory
+    at https://www.knightfrank.com/people (HTTP 200). Any resulting arrangement would
+    be a bespoke commercial conversation with no public terms, which is why the gate is
+    recorded as none-published rather than partner-only — classifying it as
+    partner-only would imply a partner programme exists, and none is published.
+  whyGatedIsTrueDespiteAnAnonymousEndpoint: |
+    This is the important nuance and it is the reason the two facts are recorded
+    separately. `gated: true` describes what Knight Frank OFFERS a developer, which is
+    nothing. It does not contradict the finding that
+    api-v3.web.prd-knightfrank.com answers without credentials.
+
+      - The data a real estate developer would actually want — property listings,
+        saved searches, alerts, account state — lives on
+        api-v2.web.prd-knightfrank.com and returns HTTP 401. It is protected by Azure
+        AD B2C through a first-party MSAL client and a consumer sign-in policy. That is
+        an end-user login for the "My Knight Frank" saved-property feature, not a
+        developer credential, and there is no documented way for a third party to
+        obtain a client registration in that tenant.
+      - The surface that IS anonymous — api-v3 — is an internal corporate site-search
+        service (CMS pages, research index, office directory, staff directory). It is
+        unadvertised, undocumented in any human-facing place, carries no terms, and
+        exists at a hostname (`web.prd-knightfrank.com`) that is plainly an internal
+        environment naming convention rather than a product domain.
+
+    A developer can call the v3 API today. A developer has not been invited to, cannot
+    point at any published permission to, and has no stability or terms commitment.
+  credentialIssuance: |
+    For api-v3: none required and none issued — the API is anonymous.
+    For api-v2: Azure AD B2C authorization-code flow via MSAL. The client id observed
+    in the site configuration is a first-party Knight Frank web client bound to the
+    scope MyKf.ReadWrite in the KnightFrankB2Cprod tenant. There is no application
+    process, no developer console and no documented path for a third party to register
+    a client against that tenant.
+  docsAreOpen: |
+    Partly, and by accident rather than by policy. The api-v3 OpenAPI document and its
+    Swagger UI are fully open — anyone can read the contract. But that is one internal
+    search service, not the listing estate. This is the inverse of the Zoopla shape
+    (contracts public, data licensed): here the contract that is public belongs to the
+    surface nobody wants, and the surface that matters publishes no contract at all.
+
+openData:
+  publishesOpenData: false
+  note: |
+    Knight Frank publishes no open, unlicensed, publicly callable dataset. The Knight
+    Frank Research programme is substantial and well known — The Wealth Report, the
+    Prime International Residential Index (PIRI 100), the Luxury Investment Index, the
+    Wealth Sizing Model — and https://www.knightfrank.com/research returned HTTP 200,
+    but it ships as PDF reports and web narrative with no data download, no CSV, no
+    feed and no API. https://publications.knightfrank.com/ resolves but redirects to
+    its own /404/ page. The Foleon-hosted publication microsite
+    (knightfrank.foleon.com) and the Frontify-hosted assets.knightfrank.com are
+    brand/document delivery, not data.
+
+    The anonymously reachable api-v3 /intelligencelab operations index that research
+    output for site search, but that is a search index over marketing content behind an
+    unadvertised internal endpoint — it is not published open data and must not be
+    counted as such.
+
+    The genuinely open UK property layer sits in the public sector and is not operated
+    by Knight Frank: HM Land Registry Price Paid Data and ownership data under the Open
+    Government Licence, and Ordnance Survey's addressing and mapping open products.
+    This is the structural inverse of the United States — the UK has no industry
+    standard and no MLS, but it does have real open government property APIs, and none
+    of them come from the brokerages or the portals.
+
+authModel:
+  schemes:
+  - surface: api-v3.web.prd-knightfrank.com
+    scheme: none
+    detail: >-
+      No authentication. The harvested OpenAPI 3.0.1 document contains no
+      `components.securitySchemes` and no `security` array. Live GETs against /office,
+      /person, /person/autocomplete and /service-lines returned HTTP 200 with no
+      credential; /search returned HTTP 204 and /intelligencelab/facets returned HTTP
+      500, neither of which is an auth challenge.
+  - surface: api-v2.web.prd-knightfrank.com
+    scheme: OAuth 2.0 / OpenID Connect via Azure AD B2C (bearer token, MSAL)
+    detail: >-
+      GET /properties/search and GET /secure/account both returned HTTP 401 with a
+      zero-byte body. The front-end application binds this host to a B2C scope through
+      an MSAL protected-resource map.
+  azureAdB2C:
+    customDomain: login.prd-knightfrank.com
+    b2cloginDomain: knightfrankb2cprod.b2clogin.com
+    tenantDomain: KnightFrankB2Cprod.onmicrosoft.com
+    tenantId: ea15e386-0dbc-4a5b-ac74-08f50f444486
+    userFlowOrCustomPolicy: B2C_1A_MYKFSIGNIN
+    scope: >-
+      https://KnightFrankB2Cprod.onmicrosoft.com/6e6a9034-3e20-4ec6-993f-61c89c0a2e2a/MyKf.ReadWrite
+    sourceOfConfig: >-
+      Inline `kfsearchconfig.Azureb2c` object in the HTML of
+      https://www.knightfrank.co.uk/properties/residential/for-sale/london (HTTP 200).
+      These are public client-side values, not secrets.
+    note: >-
+      This is a CONSUMER identity system for the "My Knight Frank" saved-property and
+      alerts feature. It is not a developer identity system. `scopes_supported` in both
+      discovery documents is `["openid"]` only — the MyKf.ReadWrite resource scope is
+      not advertised in discovery, it is hard-coded in the first-party client.
+  oidcDiscoveryHarvested:
+  - url: >-
+      https://login.prd-knightfrank.com/ea15e386-0dbc-4a5b-ac74-08f50f444486/B2C_1A_MYKFSIGNIN/v2.0/.well-known/openid-configuration
+    status: 200
+    contentType: application/json; charset=utf-8
+    savedAs: authentication/knight-frank-b2c-mykfsignin-openid-configuration.json
+    parses: true
+  - url: >-
+      https://KnightFrankB2Cprod.b2clogin.com/KnightFrankB2Cprod.onmicrosoft.com/B2C_1A_MYKFSIGNIN/v2.0/.well-known/openid-configuration
+    status: 200
+    contentType: application/json; charset=utf-8
+    savedAs: authentication/knight-frank-b2clogin-mykfsignin-openid-configuration.json
+    parses: true
+  oidcDiscoveryFacts:
+    responseTypesSupported: [code, code id_token, code token, code id_token token,
+      id_token, id_token token, token, token id_token]
+    scopesSupported: [openid]
+    idTokenSigningAlg: [RS256]
+    tokenEndpointAuthMethods: [client_secret_post, client_secret_basic]
+    subjectTypes: [pairwise]
+    claimsSupported: [extension_HubContactId, oid, sub, tid, iss, iat, exp, aud, acr,
+      nonce, auth_time]
+    note: >-
+      The custom claim `extension_HubContactId` links a B2C consumer account to a
+      contact record in an internal Knight Frank "Hub" CRM.
+  noSecurityTxt: >-
+    https://www.knightfrank.com/.well-known/security.txt and
+    https://www.knightfrank.co.uk/.well-known/security.txt both returned HTTP 404. No
+    vulnerability disclosure channel is published.
+
+harvestedArtifacts:
+  fetchDate: '2026-07-26'
+  specsHarvested: 1
+  openapiDirectory: openapi/
+  specs:
+  - file: openapi/knight-frank-api-v3-openapi.json
+    sourceURL: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+    httpStatus: 200
+    contentType: application/json;charset=utf-8
+    bytes: 11073
+    fetchDate: '2026-07-26'
+    format: OpenAPI 3.0.1
+    parses: true
+    verbatim: true
+    infoTitle: KnightFrank Api v3
+    infoVersion: v1
+    servers: none declared (the document omits a `servers` block; the base URL is the
+      host it is served from, https://api-v3.web.prd-knightfrank.com)
+    securitySchemes: none declared
+    pathCount: 11
+    tags: [CMSPage, IntelligenceLab, Office, Person, Search, ServiceLine, Telemetry]
+    operations:
+    - GET /cmspage
+    - GET /intelligencelab
+    - GET /intelligencelab/facets
+    - GET /office
+    - GET /office/{id}
+    - GET /person
+    - GET /person/autocomplete
+    - GET /person/cms-search
+    - GET /search
+    - GET /service-lines
+    - POST /telemetry/increment-selected-count
+    schemas: [IntelligenceLabOrderBy, IntelligenceLabSearchFilterType]
+    yamlEquivalent: >-
+      https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml also returns HTTP
+      200 (6,606 bytes) and parses as the same OpenAPI 3.0.1 document. Not saved
+      separately because it is the same contract in a second serialization.
+  authenticationArtifacts:
+  - authentication/knight-frank-b2c-mykfsignin-openid-configuration.json
+  - authentication/knight-frank-b2clogin-mykfsignin-openid-configuration.json
+  notHarvested: |
+    No OData $metadata, no AsyncAPI, no GraphQL schema, no JSON Schema, no Postman
+    collection and no Swagger/OpenAPI document from api-v2 exists. Every probe for
+    those is recorded in `probes` below.
+
+liveEndpointVerification:
+  note: >-
+    Anonymous GETs issued on 2026-07-26 with a browser user-agent and no credential of
+    any kind, to establish whether the api-v3 contract describes a reachable API or a
+    dead one. It is reachable and it returns real records.
+  calls:
+  - request: GET https://api-v3.web.prd-knightfrank.com/office?term=london&isoCode=GB&languageCode=en&maxResultCount=2
+    status: 200
+    contentType: application/json; charset=utf-8
+    bytes: 1511
+    result: >-
+      Array of real office records — officeId, name, address lines, postcode, country,
+      countryCode, phoneNumber, emailAddress, url, officeOpeningTimes.
+  - request: GET https://api-v3.web.prd-knightfrank.com/person?term=smith&isoCode=GB&languageCode=en&maxResultCount=2
+    status: 200
+    contentType: application/json; charset=utf-8
+    bytes: 1227
+    result: >-
+      Array of real staff records — firstName, surname, title, empNo, eaaLicense, url
+      slug, email, imageUrl on content.knightfrank.com, directDial, mobile,
+      displayName, countryCode, department.
+  - request: GET https://api-v3.web.prd-knightfrank.com/service-lines?term=valuation&isoCode=GB&domain=www.knightfrank.co.uk
+    status: 200
+    bytes: 69
+    result: '{"results":[],"hasMore":false,"totalCount":0,"fromFuzzySearch":false}'
+  - request: GET https://api-v3.web.prd-knightfrank.com/intelligencelab?term=prime&languageCode=en&hostname=www.knightfrank.com&skip=0
+    status: 200
+    bytes: 69
+    result: '{"results":[],"hasMore":false,"totalCount":0,"fromFuzzySearch":false}'
+  - request: GET https://api-v3.web.prd-knightfrank.com/search?searchTerm=london
+    status: 204
+    result: No content — the documented parameter is `term`, not `searchTerm`.
+  - request: GET https://api-v3.web.prd-knightfrank.com/intelligencelab/facets
+    status: 500
+    result: Server error when required parameters are omitted. Not an auth challenge.
+  - request: GET https://api-v2.web.prd-knightfrank.com/properties/search
+    status: 401
+    result: Unauthorized, zero-byte body. Bearer token required.
+  - request: GET https://api-v2.web.prd-knightfrank.com/secure/account
+    status: 401
+    result: Unauthorized, zero-byte body. Bearer token required.
+
+frontEndConfiguration:
+  note: >-
+    Recorded as evidence of how the private estate is wired. Values below are
+    client-side public configuration read from page source; no secret material is
+    reproduced here.
+  source:
+    url: https://www.knightfrank.co.uk/properties/residential/for-sale/london
+    status: 200
+    contentType: text/html; charset=utf-8
+    bytes: 59171
+    object: kfsearchconfig (inline <script>)
+  endpoints:
+    ApiBase: https://api-v2.web.prd-knightfrank.com
+    ApiSecureBase: https://api-v2.web.prd-knightfrank.com/secure
+    ApiBase3: https://api-v3.web.prd-knightfrank.com
+    CmsBase: https://www.knightfrank.com
+    ResourceHost: https://content.knightfrank.com
+    BasePath: /properties/
+  appBundle:
+    url: https://www.knightfrank.co.uk/properties-resources/js/app-72bd2f22.bundle.js
+    status: 200
+    bytes: 1057443
+    framework: Angular with MSAL (Microsoft Authentication Library), redirect
+      interaction type
+    protectedResourceMap: ApiSecureBase bound to the Azure AD B2C MyKf.ReadWrite scope
+    observedSecurePaths:
+    - /account
+    - /properties/createsaved
+    - /properties/savealerts
+    - /properties/saved/
+    observedOpenPaths:
+    - /search?cachetoken=
+  cms: >-
+    The corporate sites run Optimizely/EPiServer — /Util/EPiServer.Forms/EPiServerForms.min.js
+    and /Util/Find/epi-util/find.js are loaded on knightfrank.co.uk, and EPiServer Find
+    is the search layer the api-v3 service fronts.
+  cdnAndWaf: >-
+    www., api. and content.knightfrank.com are CNAMEd to gccdn.net (Gcore). Direct
+    requests to https://api.knightfrank.com/ are answered by a WAF ("wswaf") with HTTP
+    502/503 and a Ws-Waf-Response header — it is not a developer API host and serves no
+    routes.
+
+apiFamily:
+  note: |
+    Knight Frank publishes no API documentation, so the family below is the business
+    segmentation the company itself uses on its own websites, plus the two internal
+    service surfaces that were actually observed. Only the api-v3 surface is listed in
+    apis.yml, because it is the only one with a real machine-readable contract.
+  segmentationUsedByTheSite:
+  - Residential — prime and super-prime sales and lettings, new homes, international
+    residential, country/rural houses
+  - Commercial — offices, industrial and logistics, retail, healthcare, hotels, data
+    centres, life sciences, automotive and roadside
+  - Occupier services and tenant representation
+  - Capital markets and investment sales
+  - Valuation and advisory
+  - Property asset management and facilities management
+  - Rural, agricultural and estate management consultancy
+  - Building consultancy and project management
+  - Planning and development, including advisory to property developers and
+    housebuilders
+  - Research — The Wealth Report, PIRI 100, Luxury Investment Index, Wealth Sizing
+    Model, market forecasts
+  - Knight Frank Finance — mortgage broking (knightfrankfinance.co.uk)
+  observedServiceSurfaces:
+  - name: KnightFrank Api v3 (corporate search)
+    host: https://api-v3.web.prd-knightfrank.com
+    documented: true (its own OpenAPI 3.0.1, unadvertised)
+    reachableAnonymously: true
+    covers: CMS page search, Intelligence Lab research index, office directory, people
+      directory + autocomplete, cross-site search, service-line lookup, telemetry write
+  - name: Knight Frank property/account API v2
+    host: https://api-v2.web.prd-knightfrank.com
+    documented: false
+    reachableAnonymously: false (HTTP 401)
+    covers: property search, saved properties, saved searches, property alerts,
+      consumer account
+  listingsSearch: >-
+    Consumer web at https://www.knightfrank.co.uk/properties/... backed by the
+    undocumented, 401-protected api-v2 host. No documented JSON API, no feed, no
+    export, no IDX-equivalent.
+  propertyRecords: not available publicly
+  valuationAVM: >-
+    Knight Frank valuation is a human RICS-registered professional advisory service
+    delivered as a report. No AVM product and no valuation API is published or
+    documented.
+  transactions: not available
+  documents: >-
+    Brochures are served from https://brochure.knightfrank.com/ (HTTP 200) as static
+    documents. No documents API.
+  tenancy: not available
+  payments: not available
+
+webhooksEventsSdksPostman:
+  webhooks: None. No webhook, callback or push mechanism is documented or referenced
+    anywhere.
+  events: No event bus, no streaming, no AsyncAPI document and no WebSocket surface.
+    The only event-shaped thing found is the fire-and-forget POST
+    /telemetry/increment-selected-count on api-v3, which is a client analytics write.
+  sdks: >-
+    None. No Knight Frank SDK exists in any package registry. There is no Knight Frank
+    GitHub organization — https://github.com/knightfrank returns HTTP 404, and
+    https://github.com/knight-frank returns HTTP 200 but the GitHub API
+    (https://api.github.com/users/knight-frank) shows it is type "User", name null,
+    created 2018-07-01, with 0 public repositories — an unrelated empty personal
+    handle, not the firm.
+  postman: No official Postman collection or workspace found.
+  changelog: None — there is no developer portal to publish one on.
+  statusPage: None. status.knightfrank.com does not resolve.
+  rateLimits: Not documented. No rate-limit headers were observed on api-v3 responses.
+  sandbox: None.
+  llmsTxt: >-
+    Neither https://www.knightfrank.com/llms.txt nor https://www.knightfrank.co.uk/llms.txt
+    exists (both 404), and https://www.knightfrank.com/.well-known/ai-plugin.json is
+    404. robots.txt on both domains blanket-disallows CCBot, Amazonbot, AMAZONAWS,
+    awsbot, SemrushBot, SemrushBot-SA and rogerbot, which is the only machine-access
+    posture Knight Frank publishes — and it is a refusal.
+
+probes:
+- url: https://www.knightfrank.com/
+  status: 200
+  note: Global corporate site, 204 KB. Gcore-fronted. No developer or API link in
+    navigation or footer. Optimizely/EPiServer CMS.
+- url: https://www.knightfrank.co.uk/
+  status: 200
+  note: UK home market site, 257 KB.
+- url: https://developer.knightfrank.com/
+  status: '000'
+  note: Does not resolve — no DNS A record (dig returns empty).
+- url: https://developers.knightfrank.com/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://docs.knightfrank.com/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://apis.knightfrank.com/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://developer.knightfrank.co.uk/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://api.knightfrank.co.uk/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://search.knightfrank.com/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://status.knightfrank.com/
+  status: '000'
+  note: Does not resolve — no DNS A record.
+- url: https://api.knightfrank.com/
+  status: 503
+  note: >-
+    Resolves via CNAME to api.knightfrank.com.gccdn.net (Gcore, 157.185.160.33 /
+    138.113.158.123). Answered by a WAF that returns 502/503 with an HTML body
+    "<html><head><title>502 Bad Gateway</title></head>...<hr><center>wswaf</center>",
+    Server: NA, Ws-Waf-Response: Origin. No public routes, no documentation, no spec.
+    Repeated probing was then rate-limited to connection failures.
+- url: https://api.knightfrank.com/swagger/v1/swagger.json
+  status: '000'
+  note: Connection blocked by the WAF after the first requests.
+- url: https://www.knightfrank.com/developers
+  status: 404
+- url: https://www.knightfrank.com/api
+  status: 404
+- url: https://www.knightfrank.com/docs
+  status: 404
+- url: https://www.knightfrank.com/openapi.json
+  status: 404
+- url: https://www.knightfrank.com/swagger.json
+  status: 404
+- url: https://www.knightfrank.com/api-docs
+  status: 404
+- url: https://www.knightfrank.com/.well-known/openid-configuration
+  status: 404
+- url: https://www.knightfrank.com/.well-known/security.txt
+  status: 404
+- url: https://www.knightfrank.com/.well-known/ai-plugin.json
+  status: 404
+- url: https://www.knightfrank.com/llms.txt
+  status: 404
+- url: https://www.knightfrank.com/robots.txt
+  status: 200
+  note: >-
+    850 bytes. Blocks query-parameter permutations, /~/, /en/, /en-GB/, /error and
+    /content/. Blanket-disallows CCBot, AMAZONAWS, Amazonbot, awsbot, SemrushBot,
+    SemrushBot-SA and rogerbot. Declares one sitemap.
+- url: https://www.knightfrank.com/sitemap.xml
+  status: 200
+  note: >-
+    125,131 bytes, 610 <loc> entries. Case-insensitive grep for developer / swagger /
+    openapi / graphql returned zero matches across the entire document.
+- url: https://www.knightfrank.co.uk/api
+  status: 404
+- url: https://www.knightfrank.co.uk/developers
+  status: 200
+  note: >-
+    HOMONYM TRAP. 301s to
+    https://www.knightfrank.co.uk/commercial/solutions/developers-housebuilders — a
+    commercial advisory page for PROPERTY developers and housebuilders. Not a developer
+    portal.
+- url: https://www.knightfrank.co.uk/llms.txt
+  status: 404
+- url: https://www.knightfrank.co.uk/.well-known/openid-configuration
+  status: 404
+- url: https://www.knightfrank.co.uk/.well-known/security.txt
+  status: 404
+- url: https://www.knightfrank.co.uk/robots.txt
+  status: 200
+  note: Same posture as the .com, plus office-space location path blocks and a set of
+    Allow rules for per-section sitemaps under /en-GB/.
+- url: https://www.knightfrank.co.uk/properties/residential/for-sale/london
+  status: 200
+  note: >-
+    59 KB. The single most informative artifact found. Carries the inline
+    `kfsearchconfig` object naming api-v2, api-v2/secure, api-v3, the CMS base, the
+    resource host and the full Azure AD B2C authority, policy, scope and client id.
+- url: https://www.knightfrank.co.uk/properties-resources/js/app-72bd2f22.bundle.js
+  status: 200
+  note: >-
+    1,057,443 bytes. Angular + MSAL bundle. Confirms the protected-resource map binding
+    ApiSecureBase to the B2C scope and reveals the secure paths /account,
+    /properties/createsaved, /properties/savealerts, /properties/saved/.
+- url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  status: 200
+  note: Live Swagger UI, 4,761 bytes, text/html. <title>Swagger UI</title>.
+- url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  status: 200
+  note: >-
+    11,073 bytes, application/json. Valid OpenAPI 3.0.1, "KnightFrank Api v3", 11
+    paths. HARVESTED to openapi/knight-frank-api-v3-openapi.json.
+- url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+  status: 200
+  note: 6,606 bytes. Parses as the same OpenAPI 3.0.1 document.
+- url: https://api-v3.web.prd-knightfrank.com/swagger/v2/swagger.json
+  status: 404
+- url: https://api-v3.web.prd-knightfrank.com/swagger/v3/swagger.json
+  status: 404
+- url: https://api-v3.web.prd-knightfrank.com/swagger/docs/v1
+  status: 404
+- url: https://api-v3.web.prd-knightfrank.com/openapi.json
+  status: 404
+- url: 'https://api-v3.web.prd-knightfrank.com/$metadata'
+  status: 404
+  note: Not an OData service.
+- url: https://api-v3.web.prd-knightfrank.com/api-docs
+  status: 404
+- url: https://api-v3.web.prd-knightfrank.com/
+  status: 404
+- url: https://api-v2.web.prd-knightfrank.com/
+  status: 302
+  note: Redirects to /error.htm?aspxerrorpath=/. ASP.NET.
+- url: https://api-v2.web.prd-knightfrank.com/swagger/v1/swagger.json
+  status: 302
+  note: Redirects to the error page. No contract is served.
+- url: https://api-v2.web.prd-knightfrank.com/swagger/index.html
+  status: 404
+- url: https://api-v2.web.prd-knightfrank.com/openapi.json
+  status: 404
+- url: 'https://api-v2.web.prd-knightfrank.com/$metadata'
+  status: 404
+- url: https://api-v2.web.prd-knightfrank.com/api-docs
+  status: 404
+- url: https://api-v2.web.prd-knightfrank.com/properties/search
+  status: 401
+- url: https://api-v2.web.prd-knightfrank.com/secure/account
+  status: 401
+- url: https://api-v2.web.prd-knightfrank.com/properties
+  status: 404
+  note: 'Body: {"Message":"No HTTP resource was found that matches the request URI
+    ..."} — ASP.NET Web API.'
+- url: >-
+    https://login.prd-knightfrank.com/ea15e386-0dbc-4a5b-ac74-08f50f444486/B2C_1A_MYKFSIGNIN/v2.0/.well-known/openid-configuration
+  status: 200
+  note: HARVESTED to authentication/knight-frank-b2c-mykfsignin-openid-configuration.json.
+- url: >-
+    https://login.prd-knightfrank.com/ea15e386-0dbc-4a5b-ac74-08f50f444486/v2.0/.well-known/openid-configuration
+  status: 404
+  note: B2C requires the policy segment in the discovery path.
+- url: >-
+    https://KnightFrankB2Cprod.b2clogin.com/KnightFrankB2Cprod.onmicrosoft.com/B2C_1A_MYKFSIGNIN/v2.0/.well-known/openid-configuration
+  status: 200
+  note: HARVESTED to authentication/knight-frank-b2clogin-mykfsignin-openid-configuration.json.
+- url: https://account.knightfrank.com/
+  status: 200
+  note: >-
+    "My Knight Frank" — a 13 KB consumer account shell. Not a developer console. No
+    OAuth, Auth0, Okta or client_id strings in the served HTML.
+- url: https://secure.knightfrank.com/
+  status: 301
+  note: Redirects to https://account.knightfrank.com/. Linked from the site header as
+    "My Knight Frank".
+- url: https://content.knightfrank.com/
+  status: 400
+  note: content-type application/xml. Static resource origin (person photos etc.), not
+    an API.
+- url: https://assets.knightfrank.com/
+  status: 302
+  note: CNAMEd to frontify.com. Brand asset portal, not an API.
+- url: https://brochure.knightfrank.com/
+  status: 200
+  note: Static property brochure delivery. No API.
+- url: https://publications.knightfrank.com/
+  status: 200
+  note: Resolves but redirects to its own /404/ page.
+- url: https://preferences.knightfrank.com/
+  status: 500
+  note: Marketing preference centre. Errors to anonymous clients.
+- url: https://www.knightfrank.com/research
+  status: 200
+  note: >-
+    Research programme landing page. PDF and web narrative; no data download, no feed,
+    no API.
+- url: https://www.knightfrank.com/research/intelligence-lab
+  status: 404
+  note: >-
+    Probed because the api-v3 contract has IntelligenceLab operations. No public
+    Intelligence Lab page exists at this path on either domain; the name refers to an
+    internal research search index.
+- url: https://www.knightfrank.co.uk/research/intelligence-lab
+  status: 404
+- url: https://www.knightfrank.com/intelligence-lab
+  status: 404
+- url: https://www.knightfrank.com/contact
+  status: 200
+  note: Redirects to https://www.knightfrank.com/people — the staff directory, which is
+    the human-facing view of the same data api-v3 /person serves.
+- url: https://www.knightfrank.co.uk/contact-us
+  status: 200
+  note: The only published route to any Knight Frank conversation, developer or
+    otherwise.
+- url: https://www.knightfrank.us/
+  status: 200
+  note: 301s to https://www.knightfrank.com/usa. Commercial and prime residential
+    advisory, not an MLS participant.
+- url: https://www.knightfrank.com/en-us
+  status: 404
+- url: https://www.reso.org/certificates/
+  status: 200
+  note: >-
+    416,233 bytes. Case-insensitive search for "knight", "knight frank" and
+    "knightfrank" returned zero matches. Search for "United Kingdom" and "England"
+    returned zero matches — the list is entirely United States organizations.
+- url: https://certification.reso.org/
+  status: 400
+  note: Live certification analytics report. Returns 400 to an anonymous client.
+- url: https://www.reso.org/upi/
+  status: 404
+- url: https://github.com/knightfrank
+  status: 404
+  note: No Knight Frank GitHub organization under this handle.
+- url: https://github.com/knight-frank
+  status: 200
+  note: >-
+    api.github.com/users/knight-frank reports type "User", name null, company null,
+    blog empty, created 2018-07-01, public_repos 0. An unrelated empty personal
+    account, not the firm.
+
+sources:
+- url: https://www.knightfrank.com/
+  type: Website
+  note: Global corporate site. Confirms the office network and service lines.
+- url: https://www.knightfrank.co.uk/
+  type: Website
+  note: United Kingdom home market site.
+- url: https://www.knightfrank.co.uk/properties/residential/for-sale/london
+  type: PropertySearch
+  note: Source of the kfsearchconfig endpoint and Azure AD B2C configuration.
+- url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  type: APIReference
+  note: The only interactive API console in the estate, unadvertised.
+- url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  type: OpenAPI
+  note: The only machine-readable API contract Knight Frank serves.
+- url: https://www.reso.org/certificates/
+  type: Certification
+  note: RESO Certification Status list. No Knight Frank entry.

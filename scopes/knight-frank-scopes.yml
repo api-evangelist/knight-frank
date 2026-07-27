@@ -1,0 +1,63 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  authentication/knight-frank-b2c-mykfsignin-openid-configuration.json and
+  authentication/knight-frank-b2clogin-mykfsignin-openid-configuration.json
+  (both harvested HTTP 200), plus the public client-side `kfsearchconfig.Azureb2c`
+  object in the HTML of
+  https://www.knightfrank.co.uk/properties/residential/for-sale/london.
+description: >-
+  The only OAuth surface Knight Frank operates is the Azure AD B2C tenant behind
+  the consumer "My Knight Frank" account. It is not a developer authorization
+  server: there is no scope reference page, no consent screen for third-party
+  applications, and no way for an outside client to be registered against it.
+  The discovery documents advertise `openid` only; the single resource scope
+  below is read from the first-party web client's public configuration, not from
+  any published documentation. The anonymous corporate search API (api-v3) has
+  no OAuth and therefore no scopes at all.
+docs: null
+docs_note: >-
+  No scopes / permissions reference page exists. Knight Frank publishes no
+  developer documentation.
+authorization_servers:
+  - name: KnightFrankB2Cprod (B2C_1A_MYKFSIGNIN)
+    issuer_metadata: authentication/knight-frank-b2c-mykfsignin-openid-configuration.json
+    authorization_endpoint_host: login.prd-knightfrank.com
+    alternate_host: knightfrankb2cprod.b2clogin.com
+    policy: B2C_1A_MYKFSIGNIN
+    tenant_id: ea15e386-0dbc-4a5b-ac74-08f50f444486
+    flows:
+      - flow: authorizationCode
+schemes:
+  - name: azure-ad-b2c
+    source: authentication/knight-frank-authentication.yml
+    type: openIdConnect
+    flows:
+      - flow: authorizationCode
+scopes:
+  - scope: openid
+    description: >-
+      Standard OpenID Connect scope. The only value listed in
+      `scopes_supported` in both harvested B2C discovery documents.
+    flows: [authorizationCode]
+    sources:
+      - authentication/knight-frank-b2c-mykfsignin-openid-configuration.json
+      - authentication/knight-frank-b2clogin-mykfsignin-openid-configuration.json
+  - scope: https://KnightFrankB2Cprod.onmicrosoft.com/6e6a9034-3e20-4ec6-993f-61c89c0a2e2a/MyKf.ReadWrite
+    short_name: MyKf.ReadWrite
+    description: >-
+      Read/write access to the signed-in consumer's own "My Knight Frank" data —
+      saved properties, saved searches and property alerts on the api-v2 /secure
+      surface. Requested by the first-party Angular client through MSAL. It is a
+      resource scope on a custom B2C application, not a delegated developer scope,
+      and it is not obtainable by a third-party application.
+    flows: [authorizationCode]
+    protected_resource: https://api-v2.web.prd-knightfrank.com/secure
+    sources:
+      - https://www.knightfrank.co.uk/properties/residential/for-sale/london
+      - review.yml (frontEndConfiguration.appBundle.protectedResourceMap)
+third_party_access: false
+third_party_access_note: >-
+  No client registration, no partner programme, no published redirect-URI policy
+  and no application review process. The scopes above describe a first-party
+  consumer login only.

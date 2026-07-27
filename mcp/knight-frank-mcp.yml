@@ -1,0 +1,114 @@
+generated: '2026-07-26'
+method: derived
+status: candidate
+source: openapi/knight-frank-api-v3-openapi.json
+description: >-
+  Knight Frank operates NO Model Context Protocol server. Searches on 2026-07-26
+  found no MCP server in the provider's estate, no @knightfrank package on npm,
+  no entry in any public MCP registry, no /mcp endpoint on either API host, and
+  no agent or AI documentation of any kind (llms.txt and ai-plugin.json both 404
+  on knightfrank.com and knightfrank.co.uk, and robots.txt blanket-disallows a
+  list of AI crawlers). The tools below are a CANDIDATE surface derived by API
+  Evangelist from the eleven operations of the anonymous corporate search API —
+  they are what an MCP server over this contract would expose, not something
+  Knight Frank publishes. Operation names use the operationIds assigned in
+  overlays/knight-frank-api-v3-overlay.yaml, because the harvested contract
+  declares none.
+searched:
+  - target: https://api-v3.web.prd-knightfrank.com/mcp
+    status: 404
+  - target: https://api-v2.web.prd-knightfrank.com/mcp
+    status: 404
+  - target: npm registry ("knightfrank", "knight frank")
+    result: no first-party package
+  - target: https://www.knightfrank.com/llms.txt
+    status: 404
+  - target: https://www.knightfrank.com/.well-known/ai-plugin.json
+    status: 404
+server:
+  name: knight-frank
+  transport: http
+  url: null
+  auth: none
+  base_url: https://api-v3.web.prd-knightfrank.com
+caveats:
+  - >-
+    The upstream API enforces no authentication and no rate limiting, so any
+    MCP server built over it would be an unmetered anonymous proxy in front of a
+    live production search index.
+  - >-
+    The people directory returns named individuals' direct-dial and mobile
+    numbers and corporate email addresses. Exposing it as an agent tool is a data
+    protection decision (UK GDPR), not merely a technical one.
+  - >-
+    incrementSelectedCount is a non-idempotent unauthenticated write and should
+    be excluded from, or gated in, any agent tool surface.
+tools:
+  - name: search_cms_pages
+    description: Search Knight Frank CMS pages for a hostname and language.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1cmspage/get
+    operation_id: searchCmsPages
+    method: GET
+    path: /cmspage
+    read_only: true
+  - name: search_research
+    description: Search the Knight Frank Intelligence Lab research index.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1intelligencelab/get
+    operation_id: searchIntelligenceLab
+    method: GET
+    path: /intelligencelab
+    read_only: true
+  - name: get_research_facets
+    description: Get facet buckets for the research index.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1intelligencelab~1facets/get
+    operation_id: getIntelligenceLabFacets
+    method: GET
+    path: /intelligencelab/facets
+    read_only: true
+  - name: search_offices
+    description: Search the Knight Frank global office directory.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1office/get
+    operation_id: searchOffices
+    method: GET
+    path: /office
+    read_only: true
+  - name: get_office
+    description: Fetch a single Knight Frank office by its integer officeId.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1office~1{id}/get
+    operation_id: getOfficeById
+    method: GET
+    path: /office/{id}
+    read_only: true
+  - name: search_all
+    description: >-
+      Federated search across people, offices, research, blog, CMS pages and
+      service lines in one call. NOTE: the `people` facet of the response
+      carries personal data (named individuals with corporate email,
+      direct-dial and mobile). It is returned to anonymous callers, which does
+      not confer a lawful basis to collect, persist or process it. Use the
+      non-people facets unless a single purposeful lookup is genuinely needed;
+      never bulk-harvest or page through the people facet.
+    pii_facet: people
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1search/get
+    operation_id: searchAll
+    method: GET
+    path: /search
+    read_only: true
+  - name: search_service_lines
+    description: Look up Knight Frank service lines for a site domain.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1service-lines/get
+    operation_id: searchServiceLines
+    method: GET
+    path: /service-lines
+    read_only: true
+  - name: increment_selected_count
+    description: >-
+      Fire-and-forget analytics counter increment. Excluded from the recommended
+      agent surface — non-idempotent, unauthenticated write with no business value
+      to a consumer.
+    source_operation: openapi/knight-frank-api-v3-openapi.json#/paths/~1telemetry~1increment-selected-count/post
+    operation_id: incrementSelectedCount
+    method: POST
+    path: /telemetry/increment-selected-count
+    read_only: false
+    recommended: false

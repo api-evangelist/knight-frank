@@ -1,0 +1,74 @@
+generated: '2026-07-26'
+method: searched
+source: >-
+  Probes of the Knight Frank web estate on 2026-07-26 (corporate sites, sitemaps,
+  status/developer subdomains) plus openapi/knight-frank-api-v3-openapi.json.
+  Every "none" below is a recorded probe result, not an assumption.
+description: >-
+  Knight Frank operates its APIs as internal plumbing, so there is no lifecycle
+  contract of any kind for an outside consumer: no versioning policy, no
+  deprecation policy, no Sunset/Deprecation headers, no SLA, no status page and
+  no changelog. The only version signal in the estate is the hostname — api-v2
+  and api-v3 run side by side, the older one carrying the property/account
+  surface and the newer one the corporate search surface.
+versioning:
+  scheme: host-based
+  mechanism: version encoded in the hostname (api-v2 / api-v3)
+  current: api-v3
+  spec_declared_version: v1
+  inconsistency: >-
+    The OpenAPI document served from the api-v3 host self-reports info.version
+    "v1". The host name and the document disagree, and no policy reconciles them.
+  policy_url: null
+  docs: null
+  concurrent_versions:
+    - host: https://api-v2.web.prd-knightfrank.com
+      status: live
+      surface: property search, saved properties, saved searches, alerts, consumer account
+      auth: Azure AD B2C bearer (401 to anonymous callers)
+      contract_published: false
+    - host: https://api-v3.web.prd-knightfrank.com
+      status: live
+      surface: CMS search, Intelligence Lab, offices, people, cross-site search, service lines, telemetry
+      auth: none
+      contract_published: true (unadvertised Swagger UI + OpenAPI 3.0.1)
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notice_period: null
+  note: >-
+    No deprecation policy is published and no RFC 8594 Sunset or Deprecation
+    header was observed on any response. Nothing prevents either host from being
+    withdrawn or re-shaped without notice — the api-v3 contract is unadvertised,
+    so there is no audience to notify.
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in openapi/knight-frank-api-v3-openapi.json carries
+  `deprecated: true`.
+sla:
+  url: null
+  uptime_target: null
+  support_commitment: null
+  note: >-
+    No API service-level agreement, and no API terms of use to attach one to.
+status_page:
+  url: null
+  probed:
+    - url: https://status.knightfrank.com/
+      status: '000'
+      note: does not resolve — no DNS A record
+  note: No status page, no incident history, no uptime feed.
+changelog:
+  url: null
+  note: >-
+    No changelog exists. There is no developer portal to publish one on, and the
+    OpenAPI document carries no release metadata beyond info.version "v1".
+support:
+  developer_channel: null
+  general_contact: https://www.knightfrank.co.uk/contact-us
+  note: >-
+    The only published route to any Knight Frank conversation is the general
+    corporate contact form — there is no developer support channel, no forum and
+    no ticketing surface.

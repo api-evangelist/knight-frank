@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: Knight Frank office lookup
+  summary: Search the Knight Frank office directory, then fetch the full record for the best-matching office.
+  description: >-
+    A native two-step workflow over the anonymous Knight Frank corporate search
+    API (api-v3). Step 1 searches the global office directory by term and
+    country and returns a bare JSON array of offices; step 2 takes the integer
+    officeId of the first result and fetches that office's full record. No
+    credential is required — this API declares no securitySchemes and enforces no
+    authentication. Steps are bound with operationPath rather than operationId
+    because the harvested contract declares no operationIds (they are supplied by
+    ../overlays/knight-frank-api-v3-overlay.yaml).
+  version: 1.0.0
+sourceDescriptions:
+  - name: knightFrankApiV3
+    url: ../openapi/knight-frank-api-v3-openapi.json
+    type: openapi
+workflows:
+  - workflowId: findKnightFrankOffice
+    summary: Find a Knight Frank office and retrieve its full record.
+    description: >-
+      Verified live on 2026-07-26 — GET /office?term=london&isoCode=GB returned
+      HTTP 200 with real office records, and GET /office/1976 returned the full
+      office object, both without any credential.
+    inputs:
+      type: object
+      properties:
+        term:
+          type: string
+          description: Office search term, e.g. a city or office name.
+          default: london
+        isoCode:
+          type: string
+          description: ISO 3166-1 alpha-2 country filter.
+          default: GB
+        languageCode:
+          type: string
+          description: Content language.
+          default: en
+        maxResultCount:
+          type: integer
+          description: Page size for the directory search (this operation uses maxResultCount, not take).
+          default: 5
+    steps:
+      - stepId: searchOffices
+        description: Search the office directory. Returns a bare JSON array with no envelope.
+        operationPath: '{$sourceDescriptions.knightFrankApiV3.url}#/paths/~1office/get'
+        parameters:
+          - name: term
+            in: query
+            value: $inputs.term
+          - name: isoCode
+            in: query
+            value: $inputs.isoCode
+          - name: languageCode
+            in: query
+            value: $inputs.languageCode
+          - name: maxResultCount
+            in: query
+            value: $inputs.maxResultCount
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          officeId: $response.body#/0/officeId
+          officeName: $response.body#/0/name
+      - stepId: getOffice
+        description: Fetch the full office record by its integer officeId. Returns the office object directly.
+        operationPath: '{$sourceDescriptions.knightFrankApiV3.url}#/paths/~1office~1{id}/get'
+        parameters:
+          - name: id
+            in: path
+            value: $steps.searchOffices.outputs.officeId
+          - name: languageCode
+            in: query
+            value: $inputs.languageCode
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          office: $response.body
+    outputs:
+      officeId: $steps.searchOffices.outputs.officeId
+      officeName: $steps.searchOffices.outputs.officeName
+      office: $steps.getOffice.outputs.office

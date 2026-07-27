@@ -1,0 +1,180 @@
+generated: '2026-07-26'
+method: derived
+source: >-
+  openapi/knight-frank-api-v3-openapi.json plus live anonymous calls to every
+  api-v3 operation on 2026-07-26 (request/response bodies and response headers
+  observed directly). Knight Frank publishes no developer documentation, so
+  every convention below is read off the wire or off the contract — nothing is
+  taken from a docs page, because there is no docs page.
+description: >-
+  How the Knight Frank corporate search API (api-v3) behaves across its
+  operations: authentication style, pagination, response envelopes, error
+  shape, tracing headers, versioning and rate-limit signalling. This is an
+  internal EPiServer/Optimizely Find + Azure Cognitive Search facade that was
+  never designed as a public product, and the conventions show it: two different
+  response envelopes coexist, parameter names are inconsistent across
+  operations, and there is no idempotency, no request-id contract and no
+  rate-limit signalling of any kind.
+base_url: https://api-v3.web.prd-knightfrank.com
+api_style: REST over HTTPS, query-string parameters, JSON responses
+
+authentication:
+  scheme: none
+  detail: >-
+    No credential is required or accepted. No securitySchemes are declared and
+    no Authorization header is honoured. See authentication/knight-frank-authentication.yml.
+  docs: null
+
+idempotency:
+  supported: false
+  mechanism: null
+  detail: >-
+    No Idempotency-Key header, no idempotency parameter and no documented replay
+    semantics. Ten of the eleven operations are GET (inherently idempotent by
+    method). The single write, POST /telemetry/increment-selected-count, is an
+    unauthenticated fire-and-forget counter increment and is explicitly NOT
+    idempotent — replaying it increments the counter again.
+
+pagination:
+  style: offset
+  consistent: false
+  detail: >-
+    Pagination parameters differ per operation, which is a real inconsistency in
+    the contract rather than an omission in this record.
+  request_params:
+    skip: zero-based offset — /cmspage, /intelligencelab, /person/cms-search
+    take: page size — /cmspage, /search, /person/cms-search
+    maxResultCount: page size on the directory operations — /office, /person, /person/autocomplete
+  response_fields:
+    results: array of matches (envelope operations only)
+    hasMore: boolean — whether further results exist
+    totalCount: integer — total matching documents
+    fromFuzzySearch: boolean — whether the result set came from a fuzzy fallback query
+  note: >-
+    No cursor, no Link header, no next-page URL. A caller advances by
+    incrementing skip until hasMore is false.
+
+response_envelopes:
+  - shape: search-envelope
+    fields: [results, hasMore, totalCount, fromFuzzySearch]
+    operations:
+      - GET /cmspage
+      - GET /intelligencelab
+      - GET /intelligencelab/facets
+      - GET /service-lines
+      - GET /person/cms-search
+    example: '{"results":[],"hasMore":false,"totalCount":0,"fromFuzzySearch":false}'
+  - shape: bare-array
+    fields: []
+    operations:
+      - GET /office
+      - GET /person
+      - GET /person/autocomplete
+    note: returns a raw top-level JSON array with no envelope and no count
+  - shape: bare-object
+    fields: []
+    operations:
+      - GET /office/{id}
+    note: returns the office object directly
+  - shape: federated-composite
+    operations:
+      - GET /search
+    fields:
+      - diagnostics
+      - propertiesAndSuggestions
+      - people
+      - peopleHasMore
+      - offices
+      - officeHasMore
+      - research
+      - researchHasMore
+      - blog
+      - blogHasMore
+      - cms
+      - cmsHasMore
+      - serviceLines
+      - serviceLinesHasMore
+    note: >-
+      One call fans out across every content type; each type carries its own
+      <type>HasMore boolean rather than a shared pagination block. Each hit is
+      {id, type, url, text, <typed-payload>, diagnostics}.
+
+query_parameters:
+  common:
+    term: the search term on every search operation
+    languageCode: content language, e.g. en
+    hostname: which Knight Frank site the content belongs to, e.g. www.knightfrank.co.uk
+    isoCode: country filter on the directory operations, e.g. GB
+    domain: >-
+      site filter on /service-lines — NOT hostname, which every other operation
+      uses; a naming inconsistency in the contract
+  note: >-
+    /search accepts `term`; passing `searchTerm` returns HTTP 204 with no body
+    rather than a validation error.
+
+search_backend:
+  engine: Azure Cognitive Search behind EPiServer/Optimizely Find
+  evidence: >-
+    Every record leaks the Azure Search relevance field "@search.score", and the
+    corporate sites load /Util/Find/epi-util/find.js.
+  implication: >-
+    Result ordering is relevance-scored, not stable; there is no deterministic
+    sort parameter documented beyond the IntelligenceLabOrderBy enum.
+
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+  note: no user-definable metadata; otherLanguagesData is a server-populated analyzer field
+
+request_tracing:
+  client_request_id_header: null
+  response_headers_observed:
+    - Request-Context (appId=cid-v1:f1bcb258-200a-48e7-9aee-4a2d1b5cda8e — Azure Application Insights)
+    - x-azure-ref
+    - x-ws-request-id
+    - X-Px
+    - via
+  detail: >-
+    There is no documented correlation-id contract. The identifiers above are
+    emitted by Azure Front Door and the Gcore/WAF edge, not by the application,
+    and Knight Frank publishes no support channel that would accept them.
+
+versioning:
+  scheme: host-based
+  detail: >-
+    The API version is carried in the hostname (api-v2 / api-v3), not in a path
+    segment, header or media type. The OpenAPI document self-reports
+    info.version "v1" while being served from the api-v3 host — the two do not
+    agree. No version negotiation, no version header, no deprecation signalling.
+  current: api-v3 (info.version "v1")
+  detail_ref: lifecycle/knight-frank-lifecycle.yml
+
+error_envelope:
+  format: none
+  rfc9457: false
+  detail: >-
+    The contract declares only 200 responses for all eleven operations. Observed
+    failures return bare status codes with empty bodies (404, 204) or an
+    unstructured 500. The api-v2 host returns ASP.NET Web API's
+    {"Message": "..."} shape on 404 and a zero-byte 401. See
+    errors/knight-frank-error-responses.yml.
+
+rate_limiting:
+  documented: false
+  headers_observed: []
+  detail: >-
+    No RateLimit, X-RateLimit, Retry-After or 429 response was observed on any
+    api-v3 call. There is no published quota, no plan and no throttling contract.
+    The upstream api.knightfrank.com host sits behind a WAF ("wswaf") that returned
+    502/503 and then refused connections after repeated requests — the only
+    observed limiting behaviour in the estate is edge-level blocking, not an API
+    rate-limit contract.
+
+related:
+  authentication: authentication/knight-frank-authentication.yml
+  errors: errors/knight-frank-error-responses.yml
+  lifecycle: lifecycle/knight-frank-lifecycle.yml
+  data_model: data-model/knight-frank-data-model.yml
