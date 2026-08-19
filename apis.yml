@@ -65,7 +65,7 @@ tags:
 - Research
 created: '2026-07-26'
 modified: '2026-07-26'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: knight-frank:knight-frank-api-v3
   name: KnightFrank Api v3
