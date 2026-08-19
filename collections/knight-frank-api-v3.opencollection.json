@@ -1,0 +1,438 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "KnightFrank Api v3",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CMSPage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /cmspage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cmspage",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "take",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "IntelligenceLab",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /intelligencelab",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/intelligencelab",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "searchFilterType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mediaType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dateRange",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sourceType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /intelligencelab/facets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/intelligencelab/facets",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "hostname",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "searchFilterType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sourceType",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Office",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /office",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/office",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxResultCount",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /office/{id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/office/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Person",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /person",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/person",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxResultCount",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /person/autocomplete",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/person/autocomplete",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxResultCount",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GET /person/cms-search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/person/cms-search",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "languageCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "maxResultCount",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/search",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ServiceLine",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /service-lines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/service-lines",
+            "params": [
+              {
+                "name": "term",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isoCode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Telemetry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /telemetry/increment-selected-count",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/telemetry/increment-selected-count",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

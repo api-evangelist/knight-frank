@@ -1,0 +1,1172 @@
+{
+  "item": [
+    {
+      "id": "8e83e6ce-e590-4acb-be7d-991c6e732bb2",
+      "name": "CMSPage",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a73d977d-600a-4ca0-b726-60aedd0fd377",
+          "name": "/cmspage",
+          "request": {
+            "name": "/cmspage",
+            "description": {},
+            "url": {
+              "path": [
+                "cmspage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "take",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "hostname",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6d2a2e28-9024-4934-90b7-546b6e106ca0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cmspage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "take",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hostname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "61aec1a1-dc20-49c0-9adc-671b62151e3f",
+      "name": "IntelligenceLab",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dedf2df1-385f-4b6f-bea0-7b8ab9214540",
+          "name": "/intelligencelab",
+          "request": {
+            "name": "/intelligencelab",
+            "description": {},
+            "url": {
+              "path": [
+                "intelligencelab"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "hostname",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchFilterType",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "mediaType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "dateRange",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sourceType",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "regionId",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "54291d73-daea-42b6-96c5-da14225b1c5d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "intelligencelab"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hostname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchFilterType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "mediaType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateRange",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sourceType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "regionId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ff13b79-a268-4c0f-b6e7-fe9adfa65a1c",
+          "name": "/intelligencelab/facets",
+          "request": {
+            "name": "/intelligencelab/facets",
+            "description": {},
+            "url": {
+              "path": [
+                "intelligencelab",
+                "facets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "hostname",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchFilterType",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sourceType",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7c1322d-2b74-4d3b-a823-55c0ccc7068a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "intelligencelab",
+                    "facets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hostname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchFilterType",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sourceType",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "fb65f1ca-5bc6-44af-81cb-a039ecf2cea3",
+      "name": "Office",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9d82894c-9b6e-4e7b-be2c-ead536a9a657",
+          "name": "/office",
+          "request": {
+            "name": "/office",
+            "description": {},
+            "url": {
+              "path": [
+                "office"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxResultCount",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5b8b82cd-2bab-4901-806f-4981b7d4b7fe",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "office"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "maxResultCount",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9de513c0-94d2-427b-9469-9ffae5b14b6d",
+          "name": "/office/:id",
+          "request": {
+            "name": "/office/:id",
+            "description": {},
+            "url": {
+              "path": [
+                "office",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "139c997c-daa2-4316-9645-09bb3c2fdc7a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "office",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "d815033d-2cde-4aca-89e5-51ca52bdd3c1",
+      "name": "Person",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3ddfbce3-ba35-4141-aea5-729cc07fe2e4",
+          "name": "/person",
+          "request": {
+            "name": "/person",
+            "description": {},
+            "url": {
+              "path": [
+                "person"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxResultCount",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e87d4569-81b2-4e48-8564-0d8e6e609df8",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "person"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "maxResultCount",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c0cf1fac-dda8-4f13-9ae9-62e7c4ec693c",
+          "name": "/person/autocomplete",
+          "request": {
+            "name": "/person/autocomplete",
+            "description": {},
+            "url": {
+              "path": [
+                "person",
+                "autocomplete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxResultCount",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ec6b2f53-e8b2-4537-ae98-a5cdbac70ce7",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "person",
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "maxResultCount",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0c49c8d-31d0-4f83-ba4a-d9690fec890f",
+          "name": "/person/cms-search",
+          "request": {
+            "name": "/person/cms-search",
+            "description": {},
+            "url": {
+              "path": [
+                "person",
+                "cms-search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "languageCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxResultCount",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a546938d-a220-49fe-b59d-50332eae2630",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "person",
+                    "cms-search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "languageCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "maxResultCount",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "ce114d14-6807-413c-afef-fe5f944186c6",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6063781c-3766-43b0-aedf-d37f410fc07c",
+          "name": "/search",
+          "request": {
+            "name": "/search",
+            "description": {},
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "012e583d-25e4-43a5-83e3-a17ba5157adb",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f2197f29-a1e6-4774-aa26-87db81149662",
+      "name": "ServiceLine",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f0d75aa-8d1e-42d1-b629-8a7d1419e111",
+          "name": "/service-lines",
+          "request": {
+            "name": "/service-lines",
+            "description": {},
+            "url": {
+              "path": [
+                "service-lines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "term",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "isoCode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8a3d4acb-6bd6-4747-871c-456b6be1ed4c",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "service-lines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isoCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "cf9a9d6e-50a0-4fce-ba32-7103ff0b6a5d",
+      "name": "Telemetry",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2fca5d06-f316-471f-ad78-193c913c974c",
+          "name": "/telemetry/increment-selected-count",
+          "request": {
+            "name": "/telemetry/increment-selected-count",
+            "description": {},
+            "url": {
+              "path": [
+                "telemetry",
+                "increment-selected-count"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1f541c8-85b1-4706-bf12-0c51c6435fba",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "telemetry",
+                    "increment-selected-count"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b85a2ea5-1115-41fb-8725-a7786bca8d04",
+    "name": "KnightFrank Api v3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "KnightFrank Api v3",
+      "type": "text/plain"
+    }
+  }
+}
