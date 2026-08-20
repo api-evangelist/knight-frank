@@ -53,6 +53,17 @@ accessModel:
   method: manual
 image: https://www.knightfrank.com/icons/apple-touch-icon-180x180.png
 tags:
+- Real-Estate
+- United Kingdom
+- Property Listings
+- Commercial Real Estate
+- Valuation
+- Brokerage
+- Property Management
+- Rentals
+- PropTech
+- Research
+tags_raw:
 - Real Estate
 - United Kingdom
 - Property Listings
@@ -87,6 +98,12 @@ apis:
   humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
   baseURL: https://api-v3.web.prd-knightfrank.com
   tags:
+  - Search
+  - Directory
+  - Research
+  - Real-Estate
+  - United Kingdom
+  tags_raw:
   - Search
   - Directory
   - Research
