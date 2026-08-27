@@ -78,40 +78,112 @@ created: '2026-07-26'
 modified: '2026-07-26'
 specificationVersion: '0.23'
 apis:
-- aid: knight-frank:knight-frank-api-v3
-  name: KnightFrank Api v3
-  description: >-
-    The corporate search service behind knightfrank.com and knightfrank.co.uk, titled
-    "KnightFrank Api v3" by its own OpenAPI document. It exposes 11 operations across
-    seven tags — CMSPage, IntelligenceLab, Office, Person, Search, ServiceLine and
-    Telemetry — covering CMS content search, the Knight Frank Intelligence Lab research
-    index, the global office directory, the people/partner directory with autocomplete,
-    a general cross-site search, service-line lookup and a selection-count telemetry
-    write. It is NOT a published developer product: Knight Frank advertises it nowhere,
-    documents it nowhere, and offers no terms, keys or signup for it. It is recorded here
-    because it is a genuine, verifiable machine-readable contract that is reachable
-    anonymously. Probed on 2026-07-26, the Swagger UI at /swagger/index.html returned
-    HTTP 200, /swagger/v1/swagger.json returned HTTP 200 with a valid OpenAPI 3.0.1
-    document, and GET /office and GET /person returned HTTP 200 with real office and
-    staff records to a client presenting no credential of any kind. There is no
-    securitySchemes block in the document and no authentication is enforced.
+- aid: knight-frank:knight-frank-cmspage-api
+  name: Knight Frank CMS Page API
+  description: The CMSPage API from Knight Frank — 1 operation(s) for cmspage.
+  humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  baseURL: https://api-v3.web.prd-knightfrank.com
+  tags:
+  - CMSPage
+  properties:
+  - type: OpenAPI
+    url: openapi/knight-frank-cmspage-api-openapi.yml
+  - type: APIReference
+    url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  - type: SwaggerJSON
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  - type: SwaggerYAML
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+- aid: knight-frank:knight-frank-intelligencelab-api
+  name: Knight Frank Intelligence Lab API
+  description: The IntelligenceLab API from Knight Frank — 2 operation(s) for intelligencelab.
+  humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  baseURL: https://api-v3.web.prd-knightfrank.com
+  tags:
+  - IntelligenceLab
+  properties:
+  - type: OpenAPI
+    url: openapi/knight-frank-intelligencelab-api-openapi.yml
+  - type: APIReference
+    url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  - type: SwaggerJSON
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  - type: SwaggerYAML
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+- aid: knight-frank:knight-frank-office-api
+  name: Knight Frank Office API
+  description: The Office API from Knight Frank — 2 operation(s) for office.
+  humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  baseURL: https://api-v3.web.prd-knightfrank.com
+  tags:
+  - Office
+  properties:
+  - type: OpenAPI
+    url: openapi/knight-frank-office-api-openapi.yml
+  - type: APIReference
+    url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  - type: SwaggerJSON
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  - type: SwaggerYAML
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+- aid: knight-frank:knight-frank-person-api
+  name: Knight Frank Person API
+  description: The Person API from Knight Frank — 3 operation(s) for person.
+  humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  baseURL: https://api-v3.web.prd-knightfrank.com
+  tags:
+  - Person
+  properties:
+  - type: OpenAPI
+    url: openapi/knight-frank-person-api-openapi.yml
+  - type: APIReference
+    url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  - type: SwaggerJSON
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  - type: SwaggerYAML
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+- aid: knight-frank:knight-frank-search-api
+  name: Knight Frank Search API
+  description: The Search API from Knight Frank — 1 operation(s) for search.
   humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
   baseURL: https://api-v3.web.prd-knightfrank.com
   tags:
   - Search
-  - Directory
-  - Research
-  - Real-Estate
-  - United Kingdom
-  tags_raw:
-  - Search
-  - Directory
-  - Research
-  - Real Estate
-  - United Kingdom
   properties:
   - type: OpenAPI
-    url: openapi/knight-frank-api-v3-openapi.json
+    url: openapi/knight-frank-search-api-openapi.yml
+  - type: APIReference
+    url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  - type: SwaggerJSON
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  - type: SwaggerYAML
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+- aid: knight-frank:knight-frank-serviceline-api
+  name: Knight Frank Service Line API
+  description: The ServiceLine API from Knight Frank — 1 operation(s) for serviceline.
+  humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  baseURL: https://api-v3.web.prd-knightfrank.com
+  tags:
+  - ServiceLine
+  properties:
+  - type: OpenAPI
+    url: openapi/knight-frank-serviceline-api-openapi.yml
+  - type: APIReference
+    url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  - type: SwaggerJSON
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json
+  - type: SwaggerYAML
+    url: https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.yaml
+- aid: knight-frank:knight-frank-telemetry-api
+  name: Knight Frank Telemetry API
+  description: The Telemetry API from Knight Frank — 1 operation(s) for telemetry.
+  humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
+  baseURL: https://api-v3.web.prd-knightfrank.com
+  tags:
+  - Telemetry
+  properties:
+  - type: OpenAPI
+    url: openapi/knight-frank-telemetry-api-openapi.yml
   - type: APIReference
     url: https://api-v3.web.prd-knightfrank.com/swagger/index.html
   - type: SwaggerJSON
