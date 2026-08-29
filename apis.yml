@@ -37,6 +37,18 @@ description: >-
   publishes no open data either; its research ships as PDF and web narrative, and the
   genuinely open UK property layer belongs to the public sector — HM Land Registry Price
   Paid Data and Ordnance Survey open products — not to the brokerage.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: none-published
