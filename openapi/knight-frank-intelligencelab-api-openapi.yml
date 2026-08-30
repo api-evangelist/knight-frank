@@ -1,0 +1,107 @@
+openapi: 3.2.0
+info:
+  title: KnightFrank Api v3 Intelligence Lab API
+  description: KnightFrank Api v3
+  version: v1
+tags:
+- name: IntelligenceLab
+paths:
+  /intelligencelab:
+    get:
+      tags:
+      - IntelligenceLab
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: hostname
+        in: query
+        schema:
+          type: string
+      - name: searchFilterType
+        in: query
+        schema:
+          $ref: '#/components/schemas/IntelligenceLabSearchFilterType'
+      - name: mediaType
+        in: query
+        schema:
+          type: string
+      - name: dateRange
+        in: query
+        schema:
+          type: string
+      - name: sourceType
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: orderBy
+        in: query
+        schema:
+          $ref: '#/components/schemas/IntelligenceLabOrderBy'
+      - name: regionId
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: isoCode
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+  /intelligencelab/facets:
+    get:
+      tags:
+      - IntelligenceLab
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: hostname
+        in: query
+        schema:
+          type: string
+      - name: searchFilterType
+        in: query
+        schema:
+          $ref: '#/components/schemas/IntelligenceLabSearchFilterType'
+      - name: sourceType
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    IntelligenceLabSearchFilterType:
+      enum:
+      - 0
+      - 1
+      type: integer
+      format: int32
+    IntelligenceLabOrderBy:
+      enum:
+      - 0
+      - 1
+      - 2
+      type: integer
+      format: int32

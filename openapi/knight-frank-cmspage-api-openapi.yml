@@ -1,0 +1,42 @@
+openapi: 3.2.0
+info:
+  title: KnightFrank Api v3 CMS Page API
+  description: KnightFrank Api v3
+  version: v1
+tags:
+- name: CMSPage
+paths:
+  /cmspage:
+    get:
+      tags:
+      - CMSPage
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: take
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: hostname
+        in: query
+        schema:
+          type: string
+      - name: category
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success

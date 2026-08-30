@@ -1,0 +1,28 @@
+openapi: 3.2.0
+info:
+  title: KnightFrank Api v3 Service Line API
+  description: KnightFrank Api v3
+  version: v1
+tags:
+- name: ServiceLine
+paths:
+  /service-lines:
+    get:
+      tags:
+      - ServiceLine
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: isoCode
+        in: query
+        schema:
+          type: string
+      - name: domain
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success

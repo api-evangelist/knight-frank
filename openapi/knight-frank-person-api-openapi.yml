@@ -1,0 +1,88 @@
+openapi: 3.2.0
+info:
+  title: KnightFrank Api v3 Person API
+  description: KnightFrank Api v3
+  version: v1
+tags:
+- name: Person
+paths:
+  /person:
+    get:
+      tags:
+      - Person
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: isoCode
+        in: query
+        schema:
+          type: string
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: maxResultCount
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /person/autocomplete:
+    get:
+      tags:
+      - Person
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: isoCode
+        in: query
+        schema:
+          type: string
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: maxResultCount
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /person/cms-search:
+    get:
+      tags:
+      - Person
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: isoCode
+        in: query
+        schema:
+          type: string
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: maxResultCount
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: skip
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success

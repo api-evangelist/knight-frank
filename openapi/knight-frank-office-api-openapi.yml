@@ -1,0 +1,47 @@
+openapi: 3.2.0
+info:
+  title: KnightFrank Api v3 Office API
+  description: KnightFrank Api v3
+  version: v1
+tags:
+- name: Office
+paths:
+  /office:
+    get:
+      tags:
+      - Office
+      parameters:
+      - name: term
+        in: query
+        schema:
+          type: string
+      - name: isoCode
+        in: query
+        schema:
+          type: string
+      - name: languageCode
+        in: query
+        schema:
+          type: string
+      - name: maxResultCount
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /office/{id}:
+    get:
+      tags:
+      - Office
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
