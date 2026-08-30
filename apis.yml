@@ -144,6 +144,8 @@ apis:
   humanURL: https://api-v3.web.prd-knightfrank.com/swagger/index.html
   baseURL: https://api-v3.web.prd-knightfrank.com
   tags:
+  - Persons
+  tags_raw:
   - Person
   properties:
   - type: OpenAPI
