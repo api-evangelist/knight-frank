@@ -26,3 +26,7 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get service lines
+      x-summary-source: derived
+      operationId: getServiceLines
+      x-operation-id-source: derived

@@ -40,3 +40,7 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get cmspage
+      x-summary-source: derived
+      operationId: getCmspage
+      x-operation-id-source: derived

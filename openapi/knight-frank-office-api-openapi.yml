@@ -31,6 +31,10 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get office
+      x-summary-source: derived
+      operationId: getOffice
+      x-operation-id-source: derived
   /office/{id}:
     get:
       tags:
@@ -45,3 +49,7 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get office by id
+      x-summary-source: derived
+      operationId: getOfficeById
+      x-operation-id-source: derived

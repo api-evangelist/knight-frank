@@ -61,6 +61,10 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get intelligencelab
+      x-summary-source: derived
+      operationId: getIntelligencelab
+      x-operation-id-source: derived
   /intelligencelab/facets:
     get:
       tags:
@@ -90,6 +94,10 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get intelligencelab facets
+      x-summary-source: derived
+      operationId: getIntelligencelabFacets
+      x-operation-id-source: derived
 components:
   schemas:
     IntelligenceLabSearchFilterType:

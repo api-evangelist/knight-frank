@@ -22,3 +22,7 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Create telemetry increment selected count
+      x-summary-source: derived
+      operationId: postTelemetryIncrementSelectedCount
+      x-operation-id-source: derived

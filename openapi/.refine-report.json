@@ -1,0 +1,39 @@
+{
+  "provider": "knight-frank",
+  "sources": [
+    "_original/knight-frank-api-v3-openapi.json"
+  ],
+  "outputs": [
+    "knight-frank-cmspage-api-openapi.yml",
+    "knight-frank-intelligencelab-api-openapi.yml",
+    "knight-frank-office-api-openapi.yml",
+    "knight-frank-person-api-openapi.yml",
+    "knight-frank-search-api-openapi.yml",
+    "knight-frank-serviceline-api-openapi.yml",
+    "knight-frank-telemetry-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "knight-frank-api-v3-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "knight-frank-api-v3-openapi.json: declared missing tag: CMSPage",
+    "knight-frank-api-v3-openapi.json: declared missing tag: IntelligenceLab",
+    "knight-frank-api-v3-openapi.json: declared missing tag: Office",
+    "knight-frank-api-v3-openapi.json: declared missing tag: Person",
+    "knight-frank-api-v3-openapi.json: declared missing tag: Search",
+    "knight-frank-api-v3-openapi.json: declared missing tag: ServiceLine",
+    "knight-frank-api-v3-openapi.json: declared missing tag: Telemetry",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "knight-frank-cmspage-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knight-frank-intelligencelab-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knight-frank-office-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knight-frank-person-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knight-frank-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knight-frank-serviceline-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knight-frank-telemetry-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

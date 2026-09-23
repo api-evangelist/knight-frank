@@ -31,6 +31,10 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get person
+      x-summary-source: derived
+      operationId: getPerson
+      x-operation-id-source: derived
   /person/autocomplete:
     get:
       tags:
@@ -56,6 +60,10 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get person autocomplete
+      x-summary-source: derived
+      operationId: getPersonAutocomplete
+      x-operation-id-source: derived
   /person/cms-search:
     get:
       tags:
@@ -86,3 +94,7 @@ paths:
       responses:
         '200':
           description: Success
+      summary: Get person cms search
+      x-summary-source: derived
+      operationId: getPersonCmsSearch
+      x-operation-id-source: derived
