@@ -100,16 +100,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    IntelligenceLabSearchFilterType:
-      enum:
-      - 0
-      - 1
-      type: integer
-      format: int32
     IntelligenceLabOrderBy:
       enum:
       - 0
       - 1
       - 2
+      type: integer
+      format: int32
+    IntelligenceLabSearchFilterType:
+      enum:
+      - 0
+      - 1
       type: integer
       format: int32
