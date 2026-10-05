@@ -1,0 +1,12 @@
+{
+ "url": "https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json",
+ "requested_url": "https://api-v3.web.prd-knightfrank.com/swagger/v1/swagger.json",
+ "status": 200,
+ "content_type": "application/json;charset=utf-8",
+ "bytes": 11073,
+ "sha256": "26eabf9f932ad9f8eac32226d2db92bd0476b7d6e92fe93250865d1dc49d368f",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
